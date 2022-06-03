@@ -1,9 +1,4 @@
-/*
- * Tablero.cpp
- *
- *  Created on: May 14, 2022
- *      Author: algo2
- */
+
 
 #include "Tablero.h"
 #include <iostream>
