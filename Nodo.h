@@ -1,9 +1,4 @@
-/*
- * Nodo.h
- *
- *  Created on: May 14, 2022
- *      Author: algo2
- */
+
 
 #ifndef NODO_H_
 #define NODO_H_
