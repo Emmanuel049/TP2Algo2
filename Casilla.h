@@ -1,9 +1,4 @@
-/*
- * Casilla.h
- *
- *  Created on: May 14, 2022
- *      Author: algo2
- */
+
 
 #ifndef CASILLA_H_
 #define CASILLA_H_
