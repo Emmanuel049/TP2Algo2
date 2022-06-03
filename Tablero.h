@@ -1,9 +1,4 @@
-/*
- * Tablero.h
- *
- *  Created on: May 14, 2022
- *      Author: algo2
- */
+
 #ifndef TABLERO_H_
 #define TABLERO_H_
 #include "Lista.h"
