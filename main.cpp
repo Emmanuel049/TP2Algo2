@@ -10,10 +10,11 @@
 #include "Tablero.h"
 
 int main(){
-	Tablero * myTablero=new Tablero(2,5,5);
-	myTablero->getCasilla(2,3,2)->setFicha(Avion);
-	myTablero->getCasilla(1,3,2)->setFicha(Barco);
-	myTablero->printTablero();
+	Tablero * miTablero=new Tablero(2,5,5);
+	miTablero->getCasilla(2,3,2)->setFicha(Avion);
+	miTablero->getCasilla(1,3,2)->setFicha(Barco);
+	miTablero->printTablero();
+	delete miTablero
 	return 0;
 }
 
