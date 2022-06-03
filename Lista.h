@@ -1,9 +1,3 @@
-/*
- * Lista.h
- *
- *  Created on: May 14, 2022
- *      Author: algo2
- */
 
 #ifndef LISTA_H_
 #define LISTA_H_
