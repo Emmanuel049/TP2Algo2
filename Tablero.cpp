@@ -2,15 +2,9 @@
 #include <iostream>
 
 Tablero::Tablero(unsigned int xMaximo,unsigned int yMaximo,unsigned int zMaximo){
-    if (xMaximo<1){
-        throw"El parametro x debe ser mayor que 0";
-    }
-    if (yMaximo<1){
-        throw"El parametro y debe ser mayor que 0";
-    }
-    if (zMaximo<1){
-        throw"El parametro z debe ser mayor que 0";
-    }
+    
+    validarParametros(xMaximo,yMaximo,zMaximo);
+    
     this->xMaximo=xMaximo;
     this->yMaximo=yMaximo;
     this->zMaximo=zMaximo;
@@ -99,16 +93,7 @@ void Tablero::printTablero(){
 
 
 void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z){
-    if(x<=0){
-        throw "x deben ser numeros enteros mayores que 0";
-    }
-    if(y<=0){
-            throw "y deben ser numeros enteros mayores que 0";
-        }
-    if(z<=0){
-            throw "z deben ser numeros enteros mayores que 0";
-        }
-
+    validarParametros(x,y,z);
     if(x>xMaximo){
         std::string str1=" "+this->xMaximo;
         throw  "El x debe ser menor o igual a" + str1;
@@ -123,3 +108,13 @@ void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z){
     }
 }
 
+void Tablero::validarParametros(unsigned int x,unsigned int y,unsigned int z){
+    if(x<1){
+        throw "x deben ser numeros enteros mayores que 0";
+    }
+    if(y<1){
+            throw "y deben ser numeros enteros mayores que 0";
+        }
+    if(z<1){
+            throw "z deben ser numeros enteros mayores que 0";
+        }
