@@ -52,7 +52,7 @@ public:
 	void setEstado(EstadoFicha estado);
 	/*
 	 * pre: la ficha debe estar con estado activa
-	 * pos: Elimina la ficha
+	 * pos: Cambia su estado a Eliminada
 	 */
 	void Eliminar();
 };
