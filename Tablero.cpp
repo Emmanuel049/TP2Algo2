@@ -122,3 +122,4 @@ void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z){
             throw "El z debe ser menor o igual a " + str1;
     }
 }
+
