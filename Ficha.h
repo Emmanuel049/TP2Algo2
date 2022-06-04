@@ -11,7 +11,6 @@ enum TipoFicha{
 
 class Ficha {
 private:
-
 	TipoFicha tipo;
 	Jugador* jugador;
 public:
