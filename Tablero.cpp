@@ -21,7 +21,7 @@ Tablero::Tablero(unsigned int xMaximo,unsigned int yMaximo,unsigned int zMaximo)
         for (y=1;y<=this->yMaximo;y++){
             this->casilleros->get(x)->add(new Lista<Casilla*>(),y);
             for (z=1;z<=this->zMaximo;z++){
-                        this->casilleros->get(x)->get(y)->add(new Casilla(x,y,z, General, Vacia),z);
+                        this->casilleros->get(x)->get(y)->add(new Casilla(x,y,z, General, NULL),z);
             }
         }
     }
