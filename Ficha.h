@@ -27,7 +27,7 @@ private:
 public:
 	/*
 	 * pre: el jugador no debe estar vacio
-	 * pos: Inicializa una ficha asignandole su tipo y el jugador dueño de la misma
+	 * pos: Inicializa una ficha asignandole su tipo, su estado y el jugador dueño de la misma
 	 */
 	Ficha(TipoFicha tipo, Jugador *jugador, EstadoFicha estado);
 	/*
