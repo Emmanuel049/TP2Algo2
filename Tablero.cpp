@@ -72,18 +72,7 @@ void Tablero::printTablero(){
             std::cout<<"|  ";
             this->casilleros->getCursor()->getCursor()->reiniciarCursor();
             while(this->casilleros->getCursor()->getCursor()->avanzarCursor()){
-                if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Soldado){
-                        std::cout<<"S"<<"  |  ";
-                }
-                else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Avion){
-                    std::cout<<"A"<<"  |  ";
-                }
-                else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Barco){
-                    std::cout<<"B"<<"  |  ";
-                }
-                else{
-                    std::cout<<" "<<"  |  ";
-                }
+                impresionSimboloPorFicha(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha());
             }
             std::cout<<std::endl;
         }
@@ -118,3 +107,19 @@ void Tablero::validarParametros(unsigned int x,unsigned int y,unsigned int z){
     if(z<1){
             throw "z deben ser numeros enteros mayores que 0";
         }
+}
+void Tablero::imprimirSimboloPorFicha(Ficha* ficha){
+    if(ficha->getTipo()==Soldado){
+        std::cout<<"S"<<"  |  ";
+    }
+    else if(ficha->getTipo()==Avion){
+        std::cout<<"A"<<"  |  ";
+    }
+    else if(ficha->getTipo()==Barco){
+        std::cout<<"B"<<"  |  ";
+    }
+    else{
+        std::cout<<" "<<"  |  ";
+    }
+}
+    
