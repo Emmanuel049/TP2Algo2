@@ -78,13 +78,13 @@ void Tablero::printTablero(){
             std::cout<<"|  ";
             this->casilleros->getCursor()->getCursor()->reiniciarCursor();
             while(this->casilleros->getCursor()->getCursor()->avanzarCursor()){
-                if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()==Soldado){
+                if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Soldado){
                         std::cout<<"S"<<"  |  ";
                 }
-                else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()==Avion){
+                else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Avion){
                     std::cout<<"A"<<"  |  ";
                 }
-                else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()==Barco){
+                else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Barco){
                     std::cout<<"B"<<"  |  ";
                 }
                 else{
