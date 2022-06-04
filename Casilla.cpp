@@ -56,7 +56,7 @@ Ficha* Casilla::getFicha() const {
 	return this->ficha->getTipo();
 }
 
-void Casilla::setFicha(Ficha ficha) {
+void Casilla::setFicha(Ficha* ficha) {
 	if (this->estado==Inactivo){
 		throw" No se puede colocar una ficha en una casilla con estado inactivo";
 	}else if (this->estado==Ocupado){
