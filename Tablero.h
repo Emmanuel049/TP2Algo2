@@ -49,9 +49,19 @@ public:
 private:
 	/*
 	 * Pre:-
- 	 * Pos: Si los valores no estan en reango tira una excepcion.
+ 	 * Pos: Si los valores no estan en rango tira una excepcion.
  	 */
 	void validarRango(unsigned int x,unsigned int y,unsigned int z);
+	/*
+	 * Pre:-
+ 	 * Pos: Si los valores no son enteros mayores o igual que 1 tira una exepcion
+ 	 */
+	void validarParametros(unsigned int x,unsigned int y,unsigned int z);
+	/*
+	 * Pre:El tablero debe estar inicializado
+ 	 * Pos: Segun el tipo de ficha que haya en la posicion del tablero imprime su simbolo determinado
+ 	 */
+	void imprimirSimboloPorFicha();
 };
 
 
