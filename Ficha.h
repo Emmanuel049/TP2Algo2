@@ -1,5 +1,5 @@
-#ifndef SRC_FICHA_H_
-#define SRC_FICHA_H_
+#ifndef FICHA_H_
+#define FICHA_H_
 
 #include "Jugador.h"
 
@@ -33,4 +33,4 @@ public:
 
 };
 
-#endif /* SRC_FICHA_H_ */
+#endif /* FICHA_H_ */
