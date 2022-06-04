@@ -53,7 +53,7 @@ void Casilla::vaciar(EstadoDeCasilla estado){
 }
 
 Ficha* Casilla::getFicha() const {
-	return this->ficha->getTipo();
+	return this->ficha;
 }
 
 void Casilla::setFicha(Ficha* ficha) {
