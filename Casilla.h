@@ -1,7 +1,11 @@
-
-
 #ifndef CASILLA_H_
 #define CASILLA_H_
+
+#ifndef NULL
+#define NULL 0
+#endif /* NULL */
+
+#include "Ficha.h"
 enum TipoDeCasilla{
 	Agua,
 	Tierra,
@@ -13,23 +17,18 @@ enum EstadoDeCasilla{
 	Inactivo,
 	Ocupado
 };
-enum Ficha{
-	Soldado,
-	Avion,
-	Barco,
-	Vacia
-};
+
 class Casilla {
 private:
 	EstadoDeCasilla estado;
 	TipoDeCasilla tipo;
-	Ficha ficha;
+	Ficha *ficha;
 	unsigned int x;
 	unsigned int y;
 	unsigned int z;
 public:
 
-	Casilla(unsigned int x, unsigned int y,unsigned int z, TipoDeCasilla tipoCasilla, Ficha ficha);
+	Casilla(unsigned int x, unsigned int y,unsigned int z, TipoDeCasilla tipoCasilla, Ficha* ficha);
 	virtual ~Casilla() {
 		// TODO Auto-generated destructor stub
 	}
@@ -78,12 +77,13 @@ public:
 	 * Pre: Debe estar inicializada
 	 * Pos: Devuelve el tipo de ficha que hay en la casilla
 	 */
-	Ficha getFicha() const ;
+	Ficha* getFicha() const ;
 	/*
 	 * Pre: el tipo de parametro debe ser Ficha
 	 * Pos: Cambia el tipo de ficha
 	 */
-	void setFicha(Ficha ficha);
+	void setFicha(Ficha* ficha);
 };
 
 #endif /* CASILLA_H_ */
+
