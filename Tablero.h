@@ -1,9 +1,11 @@
-
 #ifndef TABLERO_H_
 #define TABLERO_H_
 #include "Lista.h"
 #include "Casilla.h"
 
+#ifndef NULL
+#define NULL 0
+#endif /* NULL */
 
 class Tablero {
 private:
