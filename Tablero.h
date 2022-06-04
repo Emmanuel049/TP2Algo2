@@ -61,7 +61,7 @@ private:
 	 * Pre:El tablero debe estar inicializado
  	 * Pos: Segun el tipo de ficha que haya en la posicion del tablero imprime su simbolo determinado
  	 */
-	void imprimirSimboloPorFicha();
+	void imprimirSimboloPorFicha(Ficha *ficha);
 };
 
 
