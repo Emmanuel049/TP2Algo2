@@ -31,7 +31,7 @@ class Ficha {
 		*/
 		Jugador* getJugador();
 		/*
-		* pre: la ficha debe estar con estado activa
+		* pre: la ficha debe estar inicializada
 		* pos: Elimina la ficha
 		*/
 		~Ficha();
