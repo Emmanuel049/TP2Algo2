@@ -19,7 +19,7 @@ public:
 	 * Pos:Se crea un tablero de las dimenciones dadas con todos los casilleros vacios
 	 */
 	Tablero(unsigned int xMaximo,unsigned int yMaximo,unsigned int zMaximo);
-	virtual ~Tablero();
+	void eliminarTablero();
 	/*
 	 * Pre: Las dimensiones deben ser iguales o mayores que 1
 	 * Pos: Devuelve el casillero indicado
@@ -44,25 +44,34 @@ public:
 	 * Pre: El tablero debe estar inicializado
 	 * Pos: Se imprime el Tablero completo
 	 */
-	void printTablero();
+	void printTableroFichas(unsigned int numJugador);
+
+	/*
+	 * Pre: 
+	 * Pos: 
+	 */
+	void printTableroTipos();
+
+	/*
+	 * Pre: El tablero debe estar inicializado
+	 * Pos: Se imprime el Tablero completo
+	 */
+	bool leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c);
+
+	void validarParametros(unsigned int x,unsigned int y,unsigned int z);
+
+	void imprimirSimboloPorFicha(Ficha* ficha, unsigned int numJugador);
+
 
 private:
 	/*
 	 * Pre:-
- 	 * Pos: Si los valores no estan en rango tira una excepcion.
+ 	 * Pos: Si los valores no estan en reango tira una excepcion.
  	 */
 	void validarRango(unsigned int x,unsigned int y,unsigned int z);
-	/*
-	 * Pre:-
- 	 * Pos: Si los valores no son enteros mayores o igual que 1 tira una exepcion
- 	 */
-	void validarParametros(unsigned int x,unsigned int y,unsigned int z);
-	/*
-	 * Pre:El tablero debe estar inicializado
- 	 * Pos: Segun el tipo de ficha que haya en la posicion del tablero imprime su simbolo determinado
- 	 */
-	void imprimirSimboloPorFicha(Ficha *ficha);
 };
+
+
 
 
 #endif /* TABLERO_H_ */

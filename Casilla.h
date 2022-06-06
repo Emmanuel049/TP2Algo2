@@ -6,6 +6,7 @@
 #endif /* NULL */
 
 #include "Ficha.h"
+
 enum TipoDeCasilla{
 	Agua,
 	Tierra,
@@ -72,7 +73,7 @@ public:
 	 * Pre: Debe haber una ficha en la casilla
 	 * Pos: Se libera la casilla dejandola en el estado correspondiente
 	 */
-	void vaciar(EstadoDeCasilla estado);
+	Ficha* vaciar(EstadoDeCasilla estado);
 	/*
 	 * Pre: Debe estar inicializada
 	 * Pos: Devuelve el tipo de ficha que hay en la casilla

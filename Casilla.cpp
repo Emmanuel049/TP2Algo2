@@ -1,5 +1,6 @@
 #include "Casilla.h"
 
+
 Casilla::Casilla(unsigned int x, unsigned int y,unsigned int z, TipoDeCasilla tipoCasilla, Ficha* ficha){
 	if(x<=0){
 		throw "x deben ser numeros enteros mayores que 0";
@@ -10,12 +11,12 @@ Casilla::Casilla(unsigned int x, unsigned int y,unsigned int z, TipoDeCasilla ti
 	if(z<=0){
 			throw "z deben ser numeros enteros mayores que 0";
 		}
-	this->x=x;
-	this->y=y;
-	this->z=z;
-	this->tipo=tipoCasilla;
-	this->estado=Vacio;
-	this->ficha=ficha;
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->tipo = tipoCasilla;
+	this->estado = Vacio;
+	this->ficha = ficha;
 }
 EstadoDeCasilla Casilla::getEstado() const {
 	return this->estado;
@@ -44,12 +45,14 @@ unsigned int Casilla::getY() const {
 unsigned int Casilla::getZ() const {
 	return this->z;
 }
-void Casilla::vaciar(EstadoDeCasilla estado){
+Ficha* Casilla::vaciar(EstadoDeCasilla estado){
+	Ficha* ficha = this->ficha;
 	if (this->ficha==NULL){
-		throw "Debe haber una ficha en la casilla para poder moverla";
+		throw "Debe haber una ficha en la casilla para poder vaciarla";
 	}
-	this->estado=estado;
-	this->ficha=NULL;
+	this->estado = estado;
+	this->ficha = NULL;
+	return ficha;
 }
 
 Ficha* Casilla::getFicha() const {
@@ -65,6 +68,8 @@ void Casilla::setFicha(Ficha* ficha) {
 	if(ficha==NULL){
 		throw "Para inicializarla la ficha debe ser distinta que vacia";
 	}
+
 	this->ficha= ficha;
+	this->setEstado(Ocupado);
 }
 
