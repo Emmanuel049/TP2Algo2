@@ -27,16 +27,17 @@ Tablero::Tablero(unsigned int xMaximo,unsigned int yMaximo,unsigned int zMaximo)
 }
 
 Casilla * Tablero::getCasilla(unsigned int x,unsigned int y,unsigned int z) {
-    if(x<=0){
-        throw "x deben ser numeros enteros mayores que 0";
-    }
-    if(y<=0){
-            throw "y deben ser numeros enteros mayores que 0";
-        }
-    if(z<=0){
-            throw "z deben ser numeros enteros mayores que 0";
-        }
+    validarParametros(x,y,z);
     return this->casilleros->get(x)->get(y)->get(z);
+}
+
+bool Tablero::existeCasilla(unsigned int x, unsigned int y, unsigned int z){
+	try{
+		validarRango(x,y,z);
+		return true;
+	}catch(...){
+		return false;
+	}
 }
 
 Tablero::~Tablero(){
