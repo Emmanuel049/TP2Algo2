@@ -288,7 +288,7 @@ void Tablero::impresionAclaraciones(){
 }
 
 
-void Tablero::escribirTableroTexto() {
+void Tablero::escribirTableroTexto(Jugador * jugador) {
 	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
 	std::string rutaArchivo="Tablero.txt";
 	std::string str=" ";
@@ -319,7 +319,7 @@ void Tablero::escribirTableroTexto() {
 				if(actual->getEstado()==Inactivo){
 					tablero << "| " << "X" << " ";
 				}else if(actual->getEstado()==Ocupado){
-					guardadoEnArchivoTextoFicha(actual->getFicha());
+					guardadoEnArchivoTextoFicha(actual->getFicha(),actual->getFicha()->getJugador()->getNumJugador() ;
 					}
 
 				}else{
@@ -339,31 +339,29 @@ void Tablero::escribirTableroTexto() {
 
 void Tablero::leerTableroTexto(std::string rutaArchivo) {
 	impresionAclaraciones();
-	/* crea el archivo y abre la ruta especificada */
+	
 	std::ifstream tablero;
 	tablero.open(rutaArchivo.c_str());
 	if(tablero==NULL){
 		throw "No se pudo abrir el archivo";
 	}
-	/* lee la primera línea completa */
+	
 	std::string fila;
 	std::getline(tablero, fila);
 	std::cout<<fila<<std::endl;
 
-	/* lee el resto del archivo por linea*/
+	
 	while (! tablero.eof()) {
 		if (! tablero.eof()) {
 			std::getline(tablero, fila);
 			std::cout<<fila<<std::endl;
 		}
 	}
-
-	/* cierra el archivo, liberando el recurso */
 	tablero.close();
 }
 
 
-void Tablero::impresionFichaTexto(Ficha *ficha){
+void Tablero::impresionFichaTexto(Ficha *ficha, unsigned int numJugador){
 	if(ficha->getTipo()==Avion){
 		std::cout << "| " << "A" << " ";
 	}else if(ficha->getTipo()==Soldado){
@@ -385,13 +383,13 @@ void Tablero::impresionTipoTexto(Casilla * actual){
 }
 
 
-void Tablero::guardadoEnArchivoTextoFicha(Ficha *ficha){
+void Tablero::guardadoEnArchivoTextoFicha(Ficha *ficha, unsigned int numJugador){
 	if(ficha->getTipo()==Avion){
-		tablero<< "| " << "A" << " ";
+		tablero<< "| " << "A"<<numJugador << " ";
 	}else if(ficha->getTipo()==Soldado){
-		tablero<< "| " << "S" << " ";}
+		tablero<< "| " << "S"<<numJugadoe << " ";}
 	else{
-		tablero << "| " << "B" << " ";
+		tablero << "| " << "B"<<numJugador << " ";
 }
 
     
@@ -399,7 +397,7 @@ void Tablero::guardadoEnArchivoTextoTipo(Casilla * actual){
 	if(actual->getTipo()==Agua){
 		tablero << "| " << " ~" << " ";
 	}else if(actual->getTipo()==Tierra){
-		tablero << "| " << " -" << " ";
+		tablero << "| " << " -"<< " ";
 	}else{
 		tablero<< "| " << "'  '" << " ";
 	}
@@ -434,17 +432,7 @@ void Tablero::printTableroFichas(unsigned int numJugador){
 				z++;
 				if(actual->getEstado() == Ocupado){
 					if(actual->getFicha()->getJugador()->getNumJugador() == numJugador){
-						if(actual->getFicha()->getTipo() == Soldado){
-							std::cout<<"S"<< numJugador << " |  ";
-						} else {
-							if(actual->getFicha()->getTipo() == Avion){
-								std::cout<<"A"<< numJugador << " |  ";
-							} else {
-								if(actual->getFicha()->getTipo() == Barco){
-									std::cout<<"B"<< numJugador << " |  ";
-								}
-							}
-						}
+						impresionFichaTexto(actual->getFicha(), actual->getFicha()->getJugador()->getNumJugador());
 					} else {
 						std::cout<<" "<<"  |  ";
 					}
