@@ -42,7 +42,13 @@ void Tablero::eliminarTablero(){
 	this->casilleros = NULL;
 }
 
-bool Tablero::existeCasilla(unsigned int x, unsigned int y, unsigned int z){
+bool Tablero::leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c){
+	std::cout << "Ingrese el valor del eje vertical x (alto): ";
+	std::cin >> a;
+	std::cout << "Ingrese el valor del eje profundidad y (ancho): ";
+	std::cin >> b;
+	std::cout << "Ingrese el valor del eje horizontal z (largo): ";
+	std::cin >> c;
 	try{
 		validarRango(x,y,z);
 		return true;
@@ -529,16 +535,4 @@ void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z){
 		}
 }
 
-bool Tablero::leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c){
-	std::cout << "Ingrese el valor del eje vertical x (alto): ";
-	std::cin >> a;
-	std::cout << "Ingrese el valor del eje profundidad y (ancho): ";
-	std::cin >> b;
-	std::cout << "Ingrese el valor del eje horizontal z (largo): ";
-	std::cin >> c;
-	if( ( a > this->xMaximo || a < 1 ) || ( b > this->yMaximo || b < 1 ) || ( c > this->zMaximo || c < 1 ) ){
-		return false;
-	}
-	return true;
-}
 
