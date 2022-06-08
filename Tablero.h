@@ -78,6 +78,13 @@ public:
 	 *
 	 */
 	void impresionTableroTexto();
+	
+	
+	/*
+	 *Pre:-
+	 *Pos: Devuelve verdadero o falso segun la existencia de la casilla
+	 */
+	bool existeCasilla(unsigned int x, unsigned int y, unsigned int z);
 
 private:
 	/*
