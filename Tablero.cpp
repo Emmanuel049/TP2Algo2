@@ -69,6 +69,7 @@ unsigned int Tablero::getzMaximo() const {
 }
 
 void Tablero::BMPdeTablero(Jugador* jugador){
+	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
 	Vector<BMP*>* tablero=new Vector<BMP*>(this->xMaximo);
 	inicializarBMP(tablero);
 	unsigned int x=1,y=0,z=0;
@@ -79,7 +80,7 @@ void Tablero::BMPdeTablero(Jugador* jugador){
 			this->casilleros->getCursor()->getCursor()->reiniciarCursor();
 			while((this->casilleros->getCursor()->getCursor()->avanzarCursor())){
 				if(this->casilleros->getCursor()->getCursor()->getCursor()->getEstado()==Inactivo){
-					impresionInactivoBMP(tablero,jugador,x,y,z);
+					impresionInactivoBMP(tablero,x,y,z);
 				}
 				else if(this->casilleros->getCursor()->getCursor()->getCursor()->getEstado()==Ocupado){
 					if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()!=Vacia){
@@ -88,7 +89,7 @@ void Tablero::BMPdeTablero(Jugador* jugador){
 				}
 
 				else{
-					impresionTipoBMP(tablero,jugador,x,y,z);
+					impresionTipoBMP(tablero,x,y,z);
 				}
 				z++;
 			}
@@ -111,7 +112,7 @@ void Tablero::inicializarBMP(Vector<BMP*>* tablero){
 		}
 	return;
 }
-void Tablero::impresionTipoBMP(Vector<BMP*>* tablero,Jugador* jugador,unsigned int x, unsigned int y, unsigned int z){
+void Tablero::impresionTipoBMP(Vector<BMP*>* tablero, unsigned int x, unsigned int y, unsigned int z){
 	if(this->casilleros->getCursor()->getCursor()->getCursor()->getTipo()==Agua){
 		for(unsigned int i=(y)*10;i<10*(y+1);i++){
 			for(unsigned int j=(z)*10;j<10*(z+1);j++){
@@ -166,7 +167,7 @@ void Tablero::impresionFichaBMP(Vector<BMP*>* tablero,Jugador* jugador,unsigned 
 	}
 }
 
-void Tablero::impresionInactivoBMP(Vector<BMP*>* tablero,Jugador* jugador,unsigned int x, unsigned int y, unsigned int z){
+void Tablero::impresionInactivoBMP(Vector<BMP*>* tablero, unsigned int x, unsigned int y, unsigned int z){
 	for(unsigned int i=(y)*10;i<10*(y+1);i++){
 		for(unsigned int j=(z)*10;j<10*(z+1);j++){
 			tablero->obtener(x)->operator ()(i,j)->Blue=50;
@@ -200,6 +201,7 @@ void Tablero::guradadoEnArchivoBMP(Vector<BMP*>* tablero){
 
 unsigned char* Tablero::leerBMP(char* rutaArchivo)
 {
+	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
     FILE* f = fopen(rutaArchivo, "rb");
 
     if(f == NULL)
@@ -241,6 +243,7 @@ unsigned char* Tablero::leerBMP(char* rutaArchivo)
 
 void Tablero::impresionTableroTexto() 
 {
+	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
 	impresionAclaraciones();
 	this->casilleros->reiniciarCursor();
 	while((this->casilleros->avanzarCursor())){
@@ -281,7 +284,7 @@ void Tablero::impresionAclaraciones(){
 
 
 void Tablero::escribirTableroTexto() {
-	/* abre un archivo de salida */
+	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
 	std::string rutaArchivo="Tablero.txt";
 	std::string str=" ";
 	std::ofstream tablero;
