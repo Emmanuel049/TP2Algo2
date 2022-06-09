@@ -83,7 +83,10 @@ void Jugador::eliminar()
 	delete listaCartas;	
 }
 unsigned int Jugador::getCantidadFichas(){
-    return this->cantidadFichas;
+	if (this->identificador<=0){
+		throw "No se encuentra inicializado";
+	}
+   	return this->cantidadFichas;
 }
 void Jugador::setCantidadFichas(unsigned int soldados){
     this->cantidadFichas = soldados;
