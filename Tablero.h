@@ -4,8 +4,9 @@
 #include "Lista.h"
 #include "Casilla.h"
 #include "EasyBMP.h"
-#include "Jugador.h"
+#include "Ficha.h"
 #include "Vector.h"
+#include <fstream>
 
 #ifndef NULL
 #define NULL 0
@@ -44,7 +45,7 @@ public:
 	 * Pre: Las dimension y debe estar inicializada
 	 * Pos: Devuelve la dimencion y
 	 */
-	unsigned int geytMaximo() const;
+	unsigned int getyMaximo() const;
 	/*
 	 * Pre: Las dimension z debe estar inicializada
 	 * Pos: Devuelve la dimencion z
@@ -64,7 +65,7 @@ public:
 	 *Pos: Genera un bitmap por nivel (altura [x]) del tablero cambiando el color
 	 *segun tipo de ficha, estado de casilla y terreno de la casilla.
 	 */
-	void BMPdeTablero(Jugador* jugador);
+	void BMPdeTablero(unsigned int numJugador);
 
 	/*
 	 *Pre:Deben estar generados los archivos de los bitmaps
@@ -77,7 +78,7 @@ public:
 	 *Pre:-
 	 *Pos: El tablero queda escrito en un archivo de texto.
 	 */
-	void escribirTableroTexto(Jugador *jugador);
+	void escribirTableroTexto(unsigned int numJugador);
 
 	/*
 	 *Pre: Debe existir el archivo de texto done se encuentra el tablero a leer
@@ -93,7 +94,7 @@ public:
 	 * fichas, inactividad de casillas y distintos terrenos) actual.
 	 *
 	 */
-	void impresionTableroTextoMixto(Jugador *jugador);
+	void impresionTableroTextoMixto(unsigned int numJugador);
 	
 	
 	/*
@@ -148,7 +149,7 @@ private:
 	 *Pos:Devuelve en el archivo del bitmap al nivel correspondiente el color que
 	 * corresponda según el tipo de ficha y a que jugador le corresponde
 	 */
-	void impresionFichaBMP(Vector<BMP*>* tablero,Jugador* jugador,unsigned int x, unsigned int y, unsigned int z);
+	void impresionFichaBMP(Vector<BMP*>* tablero,unsigned int numJugador,unsigned int x, unsigned int y, unsigned int z);
 	
 	/*
 	 *Pre: TDA BMP debe estar inicializado, tablero también
@@ -178,40 +179,14 @@ private:
 	 *Pos:Imprime el simbolo del la ficha que se encuentra en la casilla 
 	 *que se está recorriendo
 	 */	
-	void Tablero::impresionFichaTexto(Ficha *ficha, unsigned int numJugador );
+	void impresionFichaTexto(Ficha *ficha, unsigned int numJugador);
 
 	/*
 	 *Pre:Tablero debe estar inicializado
 	 *Pos:Imprime el simbolo del tipo (terreno) de la casilla en la que se esté
 	 */
-	void Tablero::impresionTipoTexto(Casilla * actual);
+	void impresionTipoTexto(Casilla * actual);
 
-	/*
-	 *Pre:Tablero y ficha deben estar inicializados
-	 *Pos:Guarda en un archivo de texto el simbolo correspondiente
-	 * a la ficha que ocupa una determinada casilla
-	 */
-	void Tablero::guardadoEnArchivoTextoFicha(Ficha *ficha, unsigned int numJugador);
-
-	/*
-	 *Pre: Tablero debe estar inicializado
-	 *Pos: Guarda el sibolo correspondiente al Tipo de la casilla de
-	 * acuerdo a lo encontrado en esta
-	 */
-	void Tablero::guardadoEnArchivoTextoTipo(Casilla *actual);
-
-
-	/*
-	 * Pre: El tablero debe estar inicializado
-	 * Pos: Se imprime el Tablero solo mostrando fichas no terreno
-	 */
-	void printTableroFichas(unsigned int numJugador);
-
-	/*
-	 * Pre: El tablero debe estar inicializado
-	 * Pos: Se imprime el terreno del Tablero
-	 */
-	void printTableroTipos();
 
 
 };
