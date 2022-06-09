@@ -1,28 +1,90 @@
 #include "Jugador.h"
-#include "Ficha.h"
 
-#include <iostream>
+Jugador(int identificador){
+    if(identificador <= 0){
+	    throw "Error, id debe ser mayor o igual a 1";
+	}
+	this->identificador = identificador;
+	this->nombre = " - ";
+	cantidadFichas = 0;	
+	cantidadCartas = 0;
+}
 
-Jugador::Jugador(unsigned int numJugador){
-    this->cantSoldados = 0;
-    this->numJugador = numJugador;
+Jugador::Jugador(int identificador, std::string nombre)
+{
+	if(identificador <= 0){
+		throw "Error, id debe ser mayor o igual a 1";
+	}
+	if(nombre = ""){
+		throw "el nombre no puede estar vacio";
+	}
+
+	this->identificador = identificador;
+	this->nombre = nombre;
+	cantidadFichas = 0;	
+	cantidadCartas = 0;
 }
-Jugador::~Jugador(){
-    this->cantSoldados = 0;
-    this->numJugador = 0;
+
+
+std::string Jugador::obtenerNombre()
+{
+	return this->nombre;
 }
-void Jugador::setNumJugador(unsigned int num){
-    this->numJugador = num;
+
+
+unsigned int Jugador::obtenerId()
+{
+	return this->identificador;
+
 }
-void Jugador::eliminarSoldado(){
-    this->cantSoldados--;
+
+void Jugador::modificarNombre(std::string nuevoNombre)
+{
+	if(nuevoNombre = ""){
+		throw "El nombre no debe estar vacio";
+	}
+	this->nombre = nuevoNombre;
 }
-unsigned int Jugador::getNumJugador(){
-    return this->numJugador;
+
+void Jugador::modificarId(unsigned int nuevoId)
+{
+	if(nuevoId <= 0){
+		throw "El id no puede ser menor a 1";
+	}
+	this->identificador = nuevoId;
 }
-unsigned int Jugador::getCantSoldados(){
-    return this->cantSoldados;
+
+void Jugador::agregarFicha()
+{
+	this->cantidadFichas++;
 }
-void Jugador::setCantSoldados(unsigned int soldados){
-    this->cantSoldados = soldados;
+
+void Jugador::levantarCarta()
+{
+	this->cantidadCartas++;
+}
+
+void Jugador::eliminarFicha()
+{
+	this->cantidadFichas--;
+}
+
+void Jugador::eliminarCarta()
+{
+	this->cantidadCartas--;
+}
+
+
+void Jugador::eliminar()
+{
+	this->identificador = 0;
+	this->nombre = "";
+	delete listaFichas;
+	delete listaCartas;	
+}
+unsigned int Jugador::getCantidadFichas(){
+    return this->cantidadFichas;
+}
+void Jugador::setCantidadFichas(unsigned int soldados){
+    this->cantidadFichas = soldados;
 }
