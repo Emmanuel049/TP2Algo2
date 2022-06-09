@@ -80,7 +80,7 @@ public:
 	* pre: Jugador debe estar inicializado
 	* pos:Devuelve la cantidad de Fichas del jugador
 	*/
-    unsigned int Jugador::getCantidadFichas(){
+    unsigned int getCantidadFichas(){
         return this->cantidadFichas;
     }
     
@@ -88,7 +88,7 @@ public:
 	* pre:-
 	* pos:Iguala la cantidad de fichas al numero pasado por parametro
 	*/
-    void Jugador::setCantidadFichas(unsigned int soldados){
+    void setCantidadFichas(unsigned int soldados){
         this->cantidadFichas = soldados;
     }
 
