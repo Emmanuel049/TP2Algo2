@@ -1,6 +1,7 @@
 #include "Tablero.h"
 #include <iostream>
-#include <iomanip>
+#include <fstream>
+#include "Ficha.h"
 
 Tablero::Tablero(unsigned int xMaximo,unsigned int yMaximo,unsigned int zMaximo){
 	validarParametros(xMaximo,yMaximo,zMaximo);
@@ -42,7 +43,7 @@ void Tablero::eliminarTablero(){
 	this->casilleros = NULL;
 }
 
-bool Tablero::leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c,unsigned int h=0, unsigned int i=0, unsigned int j=0){
+bool Tablero::leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c,unsigned int h, unsigned int i, unsigned int j){
 	std::cout << "Ingrese el valor del eje vertical x (alto): ";
 	std::cin >> a;
 	std::cout << "Ingrese el valor del eje profundidad y (ancho): ";
@@ -50,7 +51,7 @@ bool Tablero::leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c,
 	std::cout << "Ingrese el valor del eje horizontal z (largo): ";
 	std::cin >> c;
 	try{
-		validarRango(x,y,z,h,i,j);
+		validarRango(a,b,c,h,i,j);
 		return true;
 	}catch(...){
 		return false;
@@ -61,7 +62,7 @@ unsigned int Tablero::getxMaximo() const {
 	return this->xMaximo;
 }
 
-unsigned int Tablero::geytMaximo() const {
+unsigned int Tablero::getyMaximo() const {
 	return this->yMaximo;
 }
 
@@ -69,7 +70,7 @@ unsigned int Tablero::getzMaximo() const {
 	return this->zMaximo;
 }
 
-void Tablero::BMPdeTablero(Jugador* jugador){
+void Tablero::BMPdeTablero(unsigned int numJugador){
 	validarParametros(this->xMaximo,this->yMaximo,this->zMaximo);
 	Vector<BMP*>* tablero=new Vector<BMP*>(this->xMaximo);
 	inicializarBMP(tablero);
@@ -85,8 +86,8 @@ void Tablero::BMPdeTablero(Jugador* jugador){
 					impresionInactivoBMP(tablero,x,y,z);
 				}
 				else if(actual->getEstado()==Ocupado){
-					if(actual->getFicha()!=Vacia){
-						impresionFichaBMP(tablero,jugador,x,y,z);
+					if(actual->getFicha()!=NULL){
+						impresionFichaBMP(tablero,numJugador,x,y,z);
 					}
 				}
 
@@ -138,30 +139,30 @@ void Tablero::impresionTipoBMP(Vector<BMP*>* tablero, unsigned int x, unsigned i
 	   }
 	}
 }
-void Tablero::impresionFichaBMP(Vector<BMP*>* tablero,Jugador* jugador,unsigned int x, unsigned int y, unsigned int z){
-	if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()==Soldado){
+void Tablero::impresionFichaBMP(Vector<BMP*>* tablero, unsigned int numJugador,unsigned int x, unsigned int y, unsigned int z){
+	if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Soldado){
 		for(unsigned int i=(y)*10;i<10*(y+1);i++){
 			for(unsigned int j=(z)*10;j<10*(z+1);j++){
 				tablero->obtener(x)->operator ()(i,j)->Green=30;
-				tablero->obtener(x)->operator ()(i,j)->Blue=10*(jugador->obtenerId())+20;
-				tablero->obtener(x)->operator ()(i,j)->Red=20*(jugador->obtenerId())+70;
+				tablero->obtener(x)->operator ()(i,j)->Blue=10*(numJugador)+20;
+				tablero->obtener(x)->operator ()(i,j)->Red=20*(numJugador)+70;
 			}
 		}
 	}
-	else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()==Avion){
+	else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Avion){
 		for(unsigned int i=(y)*10;i<10*(y+1);i++){
 			for(unsigned int j=(z)*10;j<10*(z+1);j++){
-						tablero->obtener(x)->operator ()(i,j)->Green=50+25*(jugador->obtenerId());
-						tablero->obtener(x)->operator ()(i,j)->Blue=25*(jugador->obtenerId())+50;
-						tablero->obtener(x)->operator ()(i,j)->Red=25*(jugador->obtenerId())+50;
+						tablero->obtener(x)->operator ()(i,j)->Green=50+25*(numJugador);
+						tablero->obtener(x)->operator ()(i,j)->Blue=25*(numJugador)+50;
+						tablero->obtener(x)->operator ()(i,j)->Red=25*(numJugador)+50;
 			}
 		}
 	}
-	else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()==Barco){
+	else if(this->casilleros->getCursor()->getCursor()->getCursor()->getFicha()->getTipo()==Barco){
 		for(unsigned int i=(y)*10;i<10*(y+1);i++){
 			for(unsigned int j=(z)*10;j<10*(z+1);j++){
-				tablero->obtener(x)->operator ()(i,j)->Green=90+20*(jugador->obtenerId());
-				tablero->obtener(x)->operator ()(i,j)->Red=110-10*(jugador->obtenerId());
+				tablero->obtener(x)->operator ()(i,j)->Green=90+20*(numJugador);
+				tablero->obtener(x)->operator ()(i,j)->Red=110-10*(numJugador);
 				tablero->obtener(x)->operator ()(i,j)->Blue=100;
 
 			}
@@ -261,7 +262,7 @@ void Tablero::impresionTableroTextoMixto(unsigned int numJugador)
 					std::cout << "| " << "X" << " ";
 				}else if(actual->getEstado()==Ocupado){
 					if(actual->getFicha()->getJugador()->obtenerId()==numJugador){
-						impresionFichaTexto(actual->getFicha());
+						impresionFichaTexto(actual->getFicha(), numJugador);
 					}
 				}else{
 					impresionTipoTexto(actual);
@@ -288,7 +289,7 @@ void Tablero::impresionAclaraciones(){
 }
 
 
-void Tablero::escribirTableroTexto(Jugador * jugador) {
+void Tablero::escribirTableroTexto(unsigned int numJugador) {
 	validarParametros(this->xMaximo,this->yMaximo,this->zMaximo);
 	std::string rutaArchivo="Tablero.txt";
 	std::string str=" ";
@@ -315,15 +316,25 @@ void Tablero::escribirTableroTexto(Jugador * jugador) {
 			tablero << h << "   ";
 			this->casilleros->getCursor()->getCursor()->reiniciarCursor();
 			while(this->casilleros->getCursor()->getCursor()->avanzarCursor()){
-				Casilla *actual= this->casilleros->getCursor()->getCursor()->getCursor();
+				Casilla * actual= this->casilleros->getCursor()->getCursor()->getCursor();
 				if(actual->getEstado()==Inactivo){
 					tablero << "| " << "X" << " ";
 				}else if(actual->getEstado()==Ocupado){
-					guardadoEnArchivoTextoFicha(actual->getFicha(),actual->getFicha()->getJugador()->getNumJugador() ;
+					if(actual->getFicha()->getTipo()==Avion){
+						tablero<< "| " << "A"<<numJugador << " ";
+					}else if(actual->getFicha()->getTipo()==Soldado){
+						tablero<< "| " << "S"<<numJugador << " ";}
+					else{
+						tablero << "| " << "B"<<numJugador << " ";
 					}
-
 				}else{
-					guardadoEnArchivoTextoTipo(actual);
+					if(actual->getTipo()==Agua){
+						tablero << "| " << " ~" << " ";
+					}else if(actual->getTipo()==Tierra){
+						tablero << "| " << " -"<< " ";
+					}else{
+						tablero<< "| " << "'  '" << " ";
+					}
 				}
 			}
 			tablero << "|" << std::endl;
@@ -339,7 +350,6 @@ void Tablero::escribirTableroTexto(Jugador * jugador) {
 
 void Tablero::leerTableroTexto(std::string rutaArchivo) {
 	impresionAclaraciones();
-	
 	std::ifstream tablero;
 	tablero.open(rutaArchivo.c_str());
 	if(tablero==NULL){
@@ -363,11 +373,11 @@ void Tablero::leerTableroTexto(std::string rutaArchivo) {
 
 void Tablero::impresionFichaTexto(Ficha *ficha, unsigned int numJugador){
 	if(ficha->getTipo()==Avion){
-		std::cout << "| " << "A" << " ";
+		std::cout << "| " << "A"<<numJugador << " ";
 	}else if(ficha->getTipo()==Soldado){
-		std::cout << "| " << "S" << " ";}
+		std::cout << "| " << "S"<<numJugador << " ";}
 	else{
-		std::cout << "| " << "B" << " ";
+		std::cout << "| " << "B"<<numJugador << " ";
 	}
 }
 
@@ -383,34 +393,15 @@ void Tablero::impresionTipoTexto(Casilla * actual){
 }
 
 
-void Tablero::guardadoEnArchivoTextoFicha(Ficha *ficha, unsigned int numJugador){
-	if(ficha->getTipo()==Avion){
-		tablero<< "| " << "A"<<numJugador << " ";
-	}else if(ficha->getTipo()==Soldado){
-		tablero<< "| " << "S"<<numJugadoe << " ";}
-	else{
-		tablero << "| " << "B"<<numJugador << " ";
-}
-
-    
-void Tablero::guardadoEnArchivoTextoTipo(Casilla * actual){
-	if(actual->getTipo()==Agua){
-		tablero << "| " << " ~" << " ";
-	}else if(actual->getTipo()==Tierra){
-		tablero << "| " << " -"<< " ";
-	}else{
-		tablero<< "| " << "'  '" << " ";
-	}
-}
 
 void Tablero::printTableroFichas(unsigned int numJugador){
 	unsigned int x=0;
 	unsigned int y=0;
 	unsigned int z=0;
 	std::cout<<"------------------Ejército Jugador" << numJugador << "--------------" <<std::endl;
-	std::cout << "Soldado: " << std::setw(8) << "S" << std::endl;
-	std::cout << "Avión: " << std::setw(10) << "A" << std::endl;
-	std::cout << "Barco: " << std::setw(10) << "B" << std::endl;
+	std::cout << "Soldado: " << std::cout.width(8) << "S" << std::endl;
+	std::cout << "Avión: " << std::cout.width(10) << "A" << std::endl;
+	std::cout << "Barco: " << std::cout.width(10) << "B" << std::endl;
 	std::cout << std::endl;
 	this->casilleros->reiniciarCursor();
 	while(this->casilleros->avanzarCursor()){
@@ -419,20 +410,20 @@ void Tablero::printTableroFichas(unsigned int numJugador){
 		
  		std::cout<<"-----------------------------------------"<<std::endl;	
 		for(unsigned int i = 1 ; i <= zMaximo ; i++){
-			std::cout << "  " << std::setw(4) << i;
+			std::cout << "  " << std::cout.width(4) << i;
 		}
 		std::cout << std::endl;
 		this->casilleros->getCursor()->reiniciarCursor();
 		while(this->casilleros->getCursor()->avanzarCursor()){
 			y++;
-			std::cout << std::setw(2) << y << "|  " ;
+			std::cout << std::cout.width(2) << y << "|  " ;
 			this->casilleros->getCursor()->getCursor()->reiniciarCursor();
 			while(this->casilleros->getCursor()->getCursor()->avanzarCursor()){
 				Casilla * actual=this->casilleros->getCursor()->getCursor()->getCursor();
 				z++;
 				if(actual->getEstado() == Ocupado){
-					if(actual->getFicha()->getJugador()->getNumJugador() == numJugador){
-						impresionFichaTexto(actual->getFicha(), actual->getFicha()->getJugador()->getNumJugador());
+					if(actual->getFicha()->getJugador()->obtenerId() == numJugador){
+						impresionFichaTexto(actual->getFicha(), actual->getFicha()->getJugador()->obtenerId());
 					} else {
 						std::cout<<" "<<"  |  ";
 					}
@@ -456,25 +447,25 @@ void Tablero::printTableroTipos(){
 	unsigned int z=0;
 
 	std::cout<<"----------------------Mapa elegido-----------------------"<<std::endl;
-	std::cout << "Tierra: " << std::setw(8) << "T" << std::endl;
-	std::cout << "Aire: " << std::setw(10) << "A" << std::endl;
-	std::cout << "Agua: " << std::setw(10) << "W" << std::endl;
+	std::cout << "Tierra: " << std::cout.width(8) << "T" << std::endl;
+	std::cout << "Aire: " << std::cout.width(10) << "A" << std::endl;
+	std::cout << "Agua: " << std::cout.width(10) << "W" << std::endl;
 	std::cout << std::endl;
 	
 	this->casilleros->reiniciarCursor();
 	while(this->casilleros->avanzarCursor()){
 		x++;
-		std::cout << std::setw(20) << "Altura x = " << x << std::endl;
+		std::cout << std::cout.width(20) << "Altura x = " << x << std::endl;
  		std::cout<<"---------------------------------------------------"<<std::endl;
 	
 		for(unsigned int i = 1 ; i <= zMaximo ; i++){
-			std::cout << "  " << std::setw(4) << i;
+			std::cout << "  " << std::cout.width(4) << i;
 		}
 		std::cout << std::endl;
 		this->casilleros->getCursor()->reiniciarCursor();
 		while(this->casilleros->getCursor()->avanzarCursor()){
 			y++;
-			std::cout << std::setw(2) << y << "|  " ;
+			std::cout << std::cout.width(2) << y << "|  " ;
 			this->casilleros->getCursor()->getCursor()->reiniciarCursor();
 			while(this->casilleros->getCursor()->getCursor()->avanzarCursor()){
 				Casilla * actual=this->casilleros->getCursor()->getCursor()->getCursor();
@@ -495,7 +486,7 @@ void Tablero::printTableroTipos(){
 	std::cout<<"---------------------------------------------------"<<std::endl<< std::endl;
 }
 
-void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z, unsigned int h=0, unsigned int i=0, unsigned int j=0){
+void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z, unsigned int h, unsigned int i, unsigned int j){
     validarParametros(x,y,z,h,i,j);
     if(x>xMaximo-i){
         std::string str1=" "+this->xMaximo;
@@ -511,7 +502,7 @@ void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z, unsigne
     }
 }
 
-void Tablero::validarParametros(unsigned int x,unsigned int y,unsigned int z,unsigned int h=0, unsigned int i=0, unsigned int j=0){
+void Tablero::validarParametros(unsigned int x,unsigned int y,unsigned int z,unsigned int h, unsigned int i, unsigned int j){
 	if(x<1+h){
 		throw "x deben ser numeros enteros mayores que 0";
 	}
@@ -521,6 +512,8 @@ void Tablero::validarParametros(unsigned int x,unsigned int y,unsigned int z,uns
 	if(z<1+j){
 			throw "z deben ser numeros enteros mayores que 0";
 		}
+}
+
 }
 
 
