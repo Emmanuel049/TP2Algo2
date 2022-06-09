@@ -54,12 +54,12 @@ void BatallaCampal::elegirYCargarMapa(){
     }
     std::cout << "Usted eligió el mapa " << num << std::endl;
     if( num == 1 ){
-        this->cargarEscenarioUno(this->tablero->getxMaximo(), this->tablero->getyMaximo(), this->tablero->getzMaximo());
+        this->cargarEscenarioUno(xmax,ymax,zmax);
     } else {
         if ( num == 2 ){
-            this->cargarEscenarioDos(this->tablero->getxMaximo(), this->tablero->getyMaximo(), this->tablero->getzMaximo());
+            this->cargarEscenarioDos(xmax,ymax,zmax);
         } else {
-            this->cargarEscenarioTres(this->tablero->getxMaximo(), this->tablero->getyMaximo(), this->tablero->getzMaximo());
+            this->cargarEscenarioTres(xmax,ymax,zmax);
         }
     }
     this->tablero->printTableroTipos();
