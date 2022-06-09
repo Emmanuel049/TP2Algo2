@@ -127,7 +127,7 @@ class BatallaCampal{
             pre: ninguna, la validación de las coordenadas en el tablero se hace fuera de este método, en dispararMisil.
             post: devuelve true si el centro del cubo seleccionado por el jugador es factible para el tablero actual.
         */
-        bool verificarCentroCubo(unsigned int &a, unsigned int &b, unsigned int &c);
+        //bool verificarCentroCubo(unsigned int &a, unsigned int &b, unsigned int &c);
         /*
             comentario: 
             pre: jugador debe existir y ser distinto de NULL.
