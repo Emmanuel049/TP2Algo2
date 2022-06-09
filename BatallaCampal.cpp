@@ -75,7 +75,7 @@ void BatallaCampal::cargarJugadores(){
     unsigned int num;
     std::cout << "Ingrese la cantidad de jugadores entre 2 y 6 " << std::endl;
     std::cin >> num;
-    while( (num <= 1) || (num > 6) ){
+    if( (num <= 1) || (num > 6) ){
         std::cout << "Número incorrecto, elija nuevamente" << std::endl;
         std::cin >> num;
     }
@@ -133,7 +133,7 @@ void BatallaCampal::setearPosIniciales(Jugador* numJugador){
             i++;
         }
     }
-    numJugador->setCantSoldados(msoldados);
+    numJugador->setCantidadFichas(msoldados);
 }
 
 
@@ -227,7 +227,7 @@ void BatallaCampal::cargarEscenarioTres(unsigned int xmax, unsigned int ymax, un
 
 unsigned int BatallaCampal::obtenerGanador(){
     for( unsigned int i = 1 ; i <= this->nJugadores ; i++ ){
-        if( this->jugadores->obtener(i)->getCantSoldados() != 0 )
+        if( this->jugadores->obtener(i)->getCantidadFichas() != 0 )
             return i;
     }
     return 0;
@@ -253,9 +253,10 @@ void BatallaCampal::ejecutarDisparo(Jugador* jugador){
         } else {
             if( this->tablero->getCasilla(x, y, z)->getFicha()->getTipo() == Soldado ){
                 std::cout << "Usted ha eliminado un soldado del jugador "<< this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->obtenerId() << "!" << std::endl;
-                this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->eliminarSoldado();
-                if ( this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->getCantSoldados() == 0 ){
+                this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->eliminarFicha();
+                if ( this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->getCantidadFichas() == 0 ){
                     std::cout << "El jugador "<< this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->obtenerId() << " ha perdido todos sus soldados y fue eliminado del juego." << std::endl;
+                    this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->eliminar();
                     this->jugadoresRestantes--;
                 }
             } else {
@@ -338,20 +339,20 @@ void BatallaCampal::moverFicha(Jugador* jugador){
             } else {
                 std::cout << "¡Aquí había un soldado o armamento enemigo! Ambos pierden la ficha" << std::endl;
                 if( this->tablero->getCasilla(xi, yi, zi)->getFicha()->getTipo() == Soldado ){
-                    this->tablero->getCasilla(xi, yi, zi)->getFicha()->getJugador()->eliminarSoldado();
+                    this->tablero->getCasilla(xi, yi, zi)->getFicha()->getJugador()->eliminarFicha();
                 }
                 if( this->tablero->getCasilla(xf, yf, zf)->getFicha()->getTipo() == Soldado ){
-                    this->tablero->getCasilla(xf, yf, zf)->getFicha()->getJugador()->eliminarSoldado();
+                    this->tablero->getCasilla(xf, yf, zf)->getFicha()->getJugador()->eliminarFicha();
                 }
 
                 delete this->tablero->getCasilla(xi, yi, zi)->vaciar(Inactivo);
                 delete this->tablero->getCasilla(xf, yf, zf)->vaciar(Inactivo);
 
-                if ( this->tablero->getCasilla(xi, yi, zi)->getFicha()->getJugador()->getCantSoldados() == 0 ){
+                if ( this->tablero->getCasilla(xi, yi, zi)->getFicha()->getJugador()->getCantidadFichas() == 0 ){
                     std::cout << "El jugador "<< this->tablero->getCasilla(xi, yi, zi)->getFicha()->getJugador()->obtenerId() << " ha perdido todos sus soldados y fue eliminado del juego." << std::endl;
                     this->jugadoresRestantes--;
                 }
-                if ( this->tablero->getCasilla(xf, yf, zf)->getFicha()->getJugador()->getCantSoldados() == 0 ){
+                if ( this->tablero->getCasilla(xf, yf, zf)->getFicha()->getJugador()->getCantidadFichas() == 0 ){
                     std::cout << "El jugador "<< this->tablero->getCasilla(xf, yf, zf)->getFicha()->getJugador()->obtenerId() << " ha perdido todos sus soldados y fue eliminado del juego." << std::endl;
                     this->jugadoresRestantes--;
                 }
@@ -423,8 +424,8 @@ void BatallaCampal::dispararMisil(Jugador* jugador){
                 
                 } else {
                     if ( this->tablero->getCasilla(x, y, z)->getFicha()->getTipo() == Soldado ){
-                        this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->eliminarSoldado();
-                        if ( this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->getCantSoldados() == 0 ){
+                        this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->eliminarFicha();
+                        if ( this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->getCantidadFichas() == 0 ){
                             std::cout << "El jugador "<< this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->obtenerId() << " ha perdido todos sus soldados y fue eliminado del juego." << std::endl;
                             this->jugadoresRestantes--;
                         }
@@ -457,7 +458,7 @@ void BatallaCampal::jugar(){
     
     while( this->jugadoresRestantes > 1 ){
         for( unsigned int i = 1 ; i <= this->nJugadores ; i++){
-            if( this->jugadores->obtener(i)->getCantSoldados() != 0 ){
+            if( this->jugadores->obtener(i)->getCantidadFichas() != 0 ){
                 std::cout << "JUGADOR " << i << ": es su turno. Mucha suerte." << std::endl;
                 this->turnoDeJugador = i;
                 this->desarrollarTurno(this->jugadores->obtener(i));
@@ -543,4 +544,3 @@ void BatallaCampal::desarrollarTurno(Jugador* jugador){
     this->tablero->BMPdeTablero(jugador->obtenerId());
     
 }
-
