@@ -57,7 +57,7 @@ public:
 	 * casilla y devuelve los parámetros a,b y c con el valor introducido por 
 	 * teclado.
 	 */
-	bool leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c);
+	bool leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c,unsigned int h=0, unsigned int i=0, unsigned int j=0);
 
 	/*
 	 *Pre: La identificacion del jugador debe ser un numero entero positivo o 0
@@ -117,9 +117,17 @@ public:
 private:
 	/*
 	 * Pre:-
- 	 * Pos: Si los valores no estan en reango tira una excepcion.
+ 	 * Pos: Si los valores no estan en reango tira una excepcion, los enteros h, i y j son por si se quiere
+	 * achicar el rango que se puede admitir.
  	 */
-	void validarRango(unsigned int x,unsigned int y,unsigned int z);
+	void validarRango(unsigned int x,unsigned int y,unsigned int z,unsigned int h=0, unsigned int i=0, unsigned int j=0);
+	
+	/*
+	 * Pre:-
+ 	 * Pos: Si los valores no son mayores o iguales a 1 y enteros tira una exepcion, los enteros h, i y j son por si se quiere
+	 * achicar el valor mínimmo de entero que se puede admitir.
+ 	 */
+	void validarParametros(unsigned int x,unsigned int y,unsigned int z,unsigned int h=0, unsigned int i=0, unsigned int j=0);
 
 	/*
 	 *Pre: Tablero debe estar inicializado para obtener dimensiones de este
