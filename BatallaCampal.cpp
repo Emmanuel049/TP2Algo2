@@ -143,7 +143,7 @@ void BatallaCampal::setearPosIniciales(Jugador* numJugador){
     pre: debe existir el objeto BatallaCampal
     post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
 */
-void BatallaCampal::cargarEscenarioUno(unsigned int this->tablero->xMaximo, unsigned int this->tablero->yMaximo, unsigned int this->tablero->zMaximo){
+void BatallaCampal::cargarEscenarioUno(unsigned int xmax, unsigned int ymax, unsigned int zmax){
 
     this->tablero = new Tablero(xmax, ymax, zmax);
     // Validar con try - catch la memoria
@@ -170,9 +170,9 @@ void BatallaCampal::cargarEscenarioUno(unsigned int this->tablero->xMaximo, unsi
     pre: debe existir el objeto BatallaCampal
     post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
 */
-void BatallaCampal::cargarEscenarioDos(unsigned int this->tablero->xMaximo, unsigned int this->tablero->yMaximo, unsigned int this->tablero->zMaximo){
+void BatallaCampal::cargarEscenarioDos(unsigned int xmax, unsigned int ymax, unsigned int zmax){
 
-    this->tablero = new Tablero(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
+    this->tablero = new Tablero(xmax, ymax, zmax);
     // Validar con try - catch la memoria
 
     for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
@@ -195,9 +195,9 @@ void BatallaCampal::cargarEscenarioDos(unsigned int this->tablero->xMaximo, unsi
     pre: debe existir el objeto BatallaCampal
     post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
 */
-void BatallaCampal::cargarEscenarioTres(unsigned int this->tablero->xMaximo, unsigned int this->tablero->yMaximo, unsigned int this->tablero->zMaximo){
+void BatallaCampal::cargarEscenarioTres(unsigned int xmax, unsigned int ymax, unsigned int zmax){
 
-    this->tablero = new Tablero(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
+    this->tablero = new Tablero(xmax, ymax, zmax);
     // Validar con try - catch la memoria
 
     for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
