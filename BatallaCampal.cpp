@@ -16,9 +16,9 @@ BatallaCampal::BatallaCampal(){
 */
 
 void BatallaCampal::vaciarBatallaCampal(){
-    for( unsigned int x = 1 ; x <= xmax ; x++ ){
-        for( unsigned int y = 1 ; y <= ymax ; y++ ){
-            for ( unsigned int z = 1 ; z <= zmax ; z++){
+    for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->yMaximo ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->zMaximo ; z++){
                 if( this->tablero->getCasilla(x, y, z)->getEstado() == Ocupado ){
                     delete this->tablero->getCasilla(x, y, z)->getFicha();
                 }
@@ -53,12 +53,12 @@ void BatallaCampal::elegirYCargarMapa(){
     }
     std::cout << "Usted eligió el mapa " << num << std::endl;
     if( num == 1 ){
-        this->cargarEscenarioUno(xmax, ymax, zmax);
+        this->cargarEscenarioUno(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
     } else {
         if ( num == 2 ){
-            this->cargarEscenarioDos(xmax, ymax, zmax);
+            this->cargarEscenarioDos(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
         } else {
-            this->cargarEscenarioTres(xmax, ymax, zmax);
+            this->cargarEscenarioTres(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
         }
     }
     this->tablero->printTableroTipos();
@@ -123,9 +123,9 @@ void BatallaCampal::inicializar(){
 void BatallaCampal::setearPosIniciales(Jugador* numJugador){
     int x, y, z;
     for( unsigned int i = 0 ; i < msoldados ; ){
-        x = rand() % (xmax) + 1;   
-        y = rand() % (ymax) + 1;   
-        z = rand() % (zmax) + 1;   
+        x = rand() % (this->tablero->xMaximo) + 1;   
+        y = rand() % (this->tablero->yMaximo) + 1;   
+        z = rand() % (this->tablero->zMaximo) + 1;   
 
         if( this->tablero->getCasilla(x, y, z)->getEstado() == Vacio ){
             this->tablero->getCasilla(x, y, z)->setFicha(new Ficha(Soldado, numJugador));
@@ -143,14 +143,14 @@ void BatallaCampal::setearPosIniciales(Jugador* numJugador){
     pre: debe existir el objeto BatallaCampal
     post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
 */
-void BatallaCampal::cargarEscenarioUno(unsigned int xmax, unsigned int ymax, unsigned int zmax){
+void BatallaCampal::cargarEscenarioUno(unsigned int this->tablero->xMaximo, unsigned int this->tablero->yMaximo, unsigned int this->tablero->zMaximo){
 
     this->tablero = new Tablero(xmax, ymax, zmax);
     // Validar con try - catch la memoria
 
-    for( unsigned int x = 1 ; x <= xmax ; x++ ){
-        for( unsigned int y = 1 ; y <= ymax ; y++ ){
-            for ( unsigned int z = 1 ; z <= zmax ; z++){
+    for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->yMaximo ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->zMaximo ; z++){
                 if( x == 1 )
                     this->tablero->getCasilla(x,y,z)->setTipo(Agua);
                 else{
@@ -170,14 +170,14 @@ void BatallaCampal::cargarEscenarioUno(unsigned int xmax, unsigned int ymax, uns
     pre: debe existir el objeto BatallaCampal
     post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
 */
-void BatallaCampal::cargarEscenarioDos(unsigned int xmax, unsigned int ymax, unsigned int zmax){
+void BatallaCampal::cargarEscenarioDos(unsigned int this->tablero->xMaximo, unsigned int this->tablero->yMaximo, unsigned int this->tablero->zMaximo){
 
-    this->tablero = new Tablero(xmax, ymax, zmax);
+    this->tablero = new Tablero(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
     // Validar con try - catch la memoria
 
-    for( unsigned int x = 1 ; x <= xmax ; x++ ){
-        for( unsigned int y = 1 ; y <= ymax ; y++ ){
-            for ( unsigned int z = 1 ; z <= zmax ; z++){
+    for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->yMaximo ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->zMaximo ; z++){
                 if( x == 1 )
                     this->tablero->getCasilla(x,y,z)->setTipo(Tierra);
                 else{
@@ -195,14 +195,14 @@ void BatallaCampal::cargarEscenarioDos(unsigned int xmax, unsigned int ymax, uns
     pre: debe existir el objeto BatallaCampal
     post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
 */
-void BatallaCampal::cargarEscenarioTres(unsigned int xmax, unsigned int ymax, unsigned int zmax){
+void BatallaCampal::cargarEscenarioTres(unsigned int this->tablero->xMaximo, unsigned int this->tablero->yMaximo, unsigned int this->tablero->zMaximo){
 
-    this->tablero = new Tablero(xmax, ymax, zmax);
+    this->tablero = new Tablero(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
     // Validar con try - catch la memoria
 
-    for( unsigned int x = 1 ; x <= xmax ; x++ ){
-            for( unsigned int y = 1 ; y <= ymax ; y++ ){
-                for ( unsigned int z = 1 ; z <= zmax ; z++){
+    for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
+            for( unsigned int y = 1 ; y <= this->tablero->yMaximo ; y++ ){
+                for ( unsigned int z = 1 ; z <= this->tablero->zMaximo ; z++){
                     if ( x == 1 ){
                         if( y < z ){
                             this->tablero->getCasilla(x,y,z)->setTipo(Tierra);
@@ -387,6 +387,7 @@ void BatallaCampal::beneficioAvion(Jugador* jugador){
     post: devuelve true si el centro del cubo seleccionado por el jugador es factible para el tablero actual.
 */
 
+/* Ya hay una igual en Tablero.
 bool BatallaCampal::verificarCentroCubo(unsigned int &a, unsigned int &b, unsigned int &c){
     std::cout << "Ingrese el valor del eje vertical x (altura): ";
     std::cin >> a;
@@ -394,14 +395,14 @@ bool BatallaCampal::verificarCentroCubo(unsigned int &a, unsigned int &b, unsign
     std::cin >> b;
     std::cout << "Ingrese el valor del eje horizontal z: ";
     std::cin >> c;
-    if( a < 2 || a > (xmax - 1) )
+    if( a < 2 || a > (this->tablero->xMaximo - 1) )
         return false;
-    if( b < 2 || b > (ymax - 1) )
+    if( b < 2 || b > (this->tablero->yMaximo - 1) )
         return false;
-    if( c < 2 || c > (zmax - 1) )
+    if( c < 2 || c > (this->tablero->zMaximo - 1) )
         return false;
     return true;
-}
+}*/
 
 
 /*
@@ -412,7 +413,7 @@ bool BatallaCampal::verificarCentroCubo(unsigned int &a, unsigned int &b, unsign
 void BatallaCampal::dispararMisil(Jugador* jugador){
     unsigned int xc, yc, zc;
     std::cout << "Elija las coordenadas que definen el centro del cubo a destruir" << std::endl;
-    while( verificarCentroCubo(xc, yc, zc) == false ){
+    while( this->tablero->leerCordenadas(xc, yc, zc,1,1,1) == false ){
         std::cout << "Coordenadas erróneas, el cubo no entra en el tablero. Ingrese nuevamente." << std::endl;
     }
     for(unsigned int x = xc-1 ; x <= xc + 1 ; x ++){
@@ -542,3 +543,4 @@ void BatallaCampal::desarrollarTurno(Jugador* jugador){
     this->tablero->BMPdeTablero(jugador->obtenerId());
     
 }
+
