@@ -13,7 +13,7 @@ private:
 	unsigned int identificador; //numero de jugador
 	std::string nombre;
 	int cantidadFichas;
-	int CantidadCartas;
+	int cantidadCartas;
 	
 public:
 	
@@ -23,7 +23,7 @@ public:
 	*/
 	Jugador(int identificador, std::string nombre);
 
-
+	Jugador(int identificador);
 	/*
 	* pre: no tiene
 	* pos: Devuelve el nombre del jugador
@@ -80,17 +80,12 @@ public:
 	* pre: Jugador debe estar inicializado
 	* pos:Devuelve la cantidad de Fichas del jugador
 	*/
-    unsigned int getCantidadFichas(){
-        return this->cantidadFichas;
-    }
-    
+    unsigned int getCantidadFichas();
     /*
 	* pre:-
 	* pos:Iguala la cantidad de fichas al numero pasado por parametro
 	*/
-    void setCantidadFichas(unsigned int soldados){
-        this->cantidadFichas = soldados;
-    }
+    void setCantidadFichas(unsigned int soldados);
 
 	/*
 	* pre: No tiene 
@@ -101,8 +96,3 @@ public:
 };
 
 #endif /* JUGADOR_H_  */
-
-
-
-
-#endif // DEFINE_JUGADOR
