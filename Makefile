@@ -9,7 +9,7 @@ main.o: main.cpp BatallaCampal.h Lista.h
 batallacampal.o: BatallaCampal.cpp BatallaCampal.h Tablero.h Array.h Jugador.h
 	g++ -Wall -c -g BatallaCampal.cpp
 
-tablero.o: Tablero.cpp Tablero.h Lista.h Casilla.h
+tablero.o: Tablero.cpp Tablero.h Lista.h Casilla.h EasyBMP.h Ficha.h Vector.h
 	g++ -Wall -c -g Tablero.cpp
 
 casilla.o: Casilla.cpp Casilla.h Ficha.h
