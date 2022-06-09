@@ -21,7 +21,7 @@ Tablero::Tablero(unsigned int xMaximo,unsigned int yMaximo,unsigned int zMaximo)
 }
 
 Casilla * Tablero::getCasilla(unsigned int x,unsigned int y,unsigned int z) {
-    	validarParametros(x,y,z);
+    	validarRango(x,y,z);
 	return this->casilleros->get(x)->get(y)->get(z);
 }
 
@@ -42,7 +42,7 @@ void Tablero::eliminarTablero(){
 	this->casilleros = NULL;
 }
 
-bool Tablero::leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c){
+bool Tablero::leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c,unsigned int h=0, unsigned int i=0, unsigned int j=0){
 	std::cout << "Ingrese el valor del eje vertical x (alto): ";
 	std::cin >> a;
 	std::cout << "Ingrese el valor del eje profundidad y (ancho): ";
@@ -50,7 +50,7 @@ bool Tablero::leerCoordenadas(unsigned int& a, unsigned int& b, unsigned int& c)
 	std::cout << "Ingrese el valor del eje horizontal z (largo): ";
 	std::cin >> c;
 	try{
-		validarRango(x,y,z);
+		validarRango(x,y,z,h,i,j);
 		return true;
 	}catch(...){
 		return false;
@@ -70,7 +70,7 @@ unsigned int Tablero::getzMaximo() const {
 }
 
 void Tablero::BMPdeTablero(Jugador* jugador){
-	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
+	validarParametros(this->xMaximo,this->yMaximo,this->zMaximo);
 	Vector<BMP*>* tablero=new Vector<BMP*>(this->xMaximo);
 	inicializarBMP(tablero);
 	unsigned int x=1,y=0,z=0;
@@ -203,7 +203,7 @@ void Tablero::guradadoEnArchivoBMP(Vector<BMP*>* tablero){
 
 unsigned char* Tablero::leerBMP(char* rutaArchivo)
 {
-	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
+	validarParametros(this->xMaximo,this->yMaximo,this->zMaximo);
     FILE* f = fopen(rutaArchivo, "rb");
 
     if(f == NULL)
@@ -245,7 +245,7 @@ unsigned char* Tablero::leerBMP(char* rutaArchivo)
 
 void Tablero::impresionTableroTextoMixto(unsigned int numJugador) 
 {
-	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
+	validarParametros(this->xMaximo,this->yMaximo,this->zMaximo);
 	impresionAclaraciones();
 	this->casilleros->reiniciarCursor();
 	while((this->casilleros->avanzarCursor())){
@@ -289,7 +289,7 @@ void Tablero::impresionAclaraciones(){
 
 
 void Tablero::escribirTableroTexto(Jugador * jugador) {
-	validarRango(this->xMaximo,this->yMaximo,this->zMaximo);
+	validarParametros(this->xMaximo,this->yMaximo,this->zMaximo);
 	std::string rutaArchivo="Tablero.txt";
 	std::string str=" ";
 	std::ofstream tablero;
@@ -495,30 +495,30 @@ void Tablero::printTableroTipos(){
 	std::cout<<"---------------------------------------------------"<<std::endl<< std::endl;
 }
 
-void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z){
-    validarParametros(x,y,z);
-    if(x>xMaximo){
+void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z, unsigned int h=0, unsigned int i=0, unsigned int j=0){
+    validarParametros(x,y,z,h,i,j);
+    if(x>xMaximo-i){
         std::string str1=" "+this->xMaximo;
         throw  "El x debe ser menor o igual a" + str1;
     }
-    if(y>yMaximo){
+    if(y>yMaximo-h){
         std::string str1=" " + this->yMaximo;
             throw "El y debe ser menor o igual a" + str1;
     }
-    if(z>zMaximo){
+    if(z>zMaximo-j){
         std::string str1=" " + this->zMaximo;
             throw "El z debe ser menor o igual a " + str1;
     }
 }
 
-void Tablero::validarRango(unsigned int x,unsigned int y,unsigned int z){
-	if(x<=0){
+void Tablero::validarParametros(unsigned int x,unsigned int y,unsigned int z,unsigned int h=0, unsigned int i=0, unsigned int j=0){
+	if(x<1+h){
 		throw "x deben ser numeros enteros mayores que 0";
 	}
-	if(y<=0){
+	if(y<1+i){
 			throw "y deben ser numeros enteros mayores que 0";
 		}
-	if(z<=0){
+	if(z<1+j){
 			throw "z deben ser numeros enteros mayores que 0";
 		}
 }
