@@ -15,10 +15,10 @@ BatallaCampal::BatallaCampal(){
     post: destruye el TDABatallaCampal, incluyendo todos sus array dinámicos y el tablero.
 */
 
-void BatallaCampal::vaciarBatallaCampal(){
-    for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
-        for( unsigned int y = 1 ; y <= this->tablero->yMaximo ; y++ ){
-            for ( unsigned int z = 1 ; z <= this->tablero->zMaximo ; z++){
+void (){
+    for( unsigned int x = 1 ; x <= this->tablero->getxMaximo() ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->getyMaximo() ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->getzMaximo() ; z++){
                 if( this->tablero->getCasilla(x, y, z)->getEstado() == Ocupado ){
                     delete this->tablero->getCasilla(x, y, z)->getFicha();
                 }
@@ -53,12 +53,12 @@ void BatallaCampal::elegirYCargarMapa(){
     }
     std::cout << "Usted eligió el mapa " << num << std::endl;
     if( num == 1 ){
-        this->cargarEscenarioUno(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
+        this->cargarEscenarioUno(this->tablero->getxMaximo(), this->tablero->getyMaximo(), this->tablero->getzMaximo());
     } else {
         if ( num == 2 ){
-            this->cargarEscenarioDos(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
+            this->cargarEscenarioDos(this->tablero->getxMaximo(), this->tablero->getyMaximo(), this->tablero->getzMaximo());
         } else {
-            this->cargarEscenarioTres(this->tablero->xMaximo, this->tablero->yMaximo, this->tablero->zMaximo);
+            this->cargarEscenarioTres(this->tablero->getxMaximo(), this->tablero->getyMaximo(), this->tablero->getzMaximo());
         }
     }
     this->tablero->printTableroTipos();
@@ -123,9 +123,9 @@ void BatallaCampal::inicializar(){
 void BatallaCampal::setearPosIniciales(Jugador* numJugador){
     int x, y, z;
     for( unsigned int i = 0 ; i < msoldados ; ){
-        x = rand() % (this->tablero->xMaximo) + 1;   
-        y = rand() % (this->tablero->yMaximo) + 1;   
-        z = rand() % (this->tablero->zMaximo) + 1;   
+        x = rand() % (this->tablero->getxMaximo()) + 1;   
+        y = rand() % (this->tablero->getyMaximo()) + 1;   
+        z = rand() % (this->tablero->getzMaximo()) + 1;   
 
         if( this->tablero->getCasilla(x, y, z)->getEstado() == Vacio ){
             this->tablero->getCasilla(x, y, z)->setFicha(new Ficha(Soldado, numJugador));
@@ -148,9 +148,9 @@ void BatallaCampal::cargarEscenarioUno(unsigned int xmax, unsigned int ymax, uns
     this->tablero = new Tablero(xmax, ymax, zmax);
     // Validar con try - catch la memoria
 
-    for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
-        for( unsigned int y = 1 ; y <= this->tablero->yMaximo ; y++ ){
-            for ( unsigned int z = 1 ; z <= this->tablero->zMaximo ; z++){
+    for( unsigned int x = 1 ; x <= this->tablero->getxMaximo() ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->getyMaximo() ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->getzMaximo() ; z++){
                 if( x == 1 )
                     this->tablero->getCasilla(x,y,z)->setTipo(Agua);
                 else{
@@ -175,9 +175,9 @@ void BatallaCampal::cargarEscenarioDos(unsigned int xmax, unsigned int ymax, uns
     this->tablero = new Tablero(xmax, ymax, zmax);
     // Validar con try - catch la memoria
 
-    for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
-        for( unsigned int y = 1 ; y <= this->tablero->yMaximo ; y++ ){
-            for ( unsigned int z = 1 ; z <= this->tablero->zMaximo ; z++){
+    for( unsigned int x = 1 ; x <= this->tablero->getxMaximo() ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->getyMaximo() ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->getzMaximo() ; z++){
                 if( x == 1 )
                     this->tablero->getCasilla(x,y,z)->setTipo(Tierra);
                 else{
@@ -200,9 +200,9 @@ void BatallaCampal::cargarEscenarioTres(unsigned int xmax, unsigned int ymax, un
     this->tablero = new Tablero(xmax, ymax, zmax);
     // Validar con try - catch la memoria
 
-    for( unsigned int x = 1 ; x <= this->tablero->xMaximo ; x++ ){
-            for( unsigned int y = 1 ; y <= this->tablero->yMaximo ; y++ ){
-                for ( unsigned int z = 1 ; z <= this->tablero->zMaximo ; z++){
+    for( unsigned int x = 1 ; x <= this->tablero->getxMaximo() ; x++ ){
+            for( unsigned int y = 1 ; y <= this->tablero->getyMaximo() ; y++ ){
+                for ( unsigned int z = 1 ; z <= this->tablero->getzMaximo() ; z++){
                     if ( x == 1 ){
                         if( y < z ){
                             this->tablero->getCasilla(x,y,z)->setTipo(Tierra);
@@ -396,11 +396,11 @@ bool BatallaCampal::verificarCentroCubo(unsigned int &a, unsigned int &b, unsign
     std::cin >> b;
     std::cout << "Ingrese el valor del eje horizontal z: ";
     std::cin >> c;
-    if( a < 2 || a > (this->tablero->xMaximo - 1) )
+    if( a < 2 || a > (this->tablero->getxMaximo() - 1) )
         return false;
-    if( b < 2 || b > (this->tablero->yMaximo - 1) )
+    if( b < 2 || b > (this->tablero->getyMaximo() - 1) )
         return false;
-    if( c < 2 || c > (this->tablero->zMaximo - 1) )
+    if( c < 2 || c > (this->tablero->getzMaximo() - 1) )
         return false;
     return true;
 }*/
@@ -544,3 +544,4 @@ void BatallaCampal::desarrollarTurno(Jugador* jugador){
     this->tablero->BMPdeTablero(jugador->obtenerId());
     
 }
+
