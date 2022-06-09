@@ -1,5 +1,6 @@
 #include "BatallaCampal.h"
 #include <iostream>
+#include <cstdlib>
 
 
 /*  
@@ -15,7 +16,7 @@ BatallaCampal::BatallaCampal(){
     post: destruye el TDABatallaCampal, incluyendo todos sus array dinámicos y el tablero.
 */
 
-void (){
+void BatallaCampal::vaciarBatallaCampal(){
     for( unsigned int x = 1 ; x <= this->tablero->getxMaximo() ; x++ ){
         for( unsigned int y = 1 ; y <= this->tablero->getyMaximo() ; y++ ){
             for ( unsigned int z = 1 ; z <= this->tablero->getzMaximo() ; z++){
@@ -123,9 +124,9 @@ void BatallaCampal::inicializar(){
 void BatallaCampal::setearPosIniciales(Jugador* numJugador){
     int x, y, z;
     for( unsigned int i = 0 ; i < msoldados ; ){
-        x = rand() % (this->tablero->getxMaximo()) + 1;   
-        y = rand() % (this->tablero->getyMaximo()) + 1;   
-        z = rand() % (this->tablero->getzMaximo()) + 1;   
+        x = rand() % (this->tablero->getxMaximo()) + 1;
+        y = rand() % (this->tablero->getyMaximo()) + 1;
+        z = rand() % (this->tablero->getzMaximo()) + 1;
 
         if( this->tablero->getCasilla(x, y, z)->getEstado() == Vacio ){
             this->tablero->getCasilla(x, y, z)->setFicha(new Ficha(Soldado, numJugador));
@@ -138,7 +139,86 @@ void BatallaCampal::setearPosIniciales(Jugador* numJugador){
 
 
 /*
+    comentario: MAPA OCEANO, nivel 1 agua resto aire. Este método llama al creador de tablero que genera los casilleros vacíos. Según el tipo de escenario se asignan los tipos de casillero.
+    No hace falta validar los maximos porque lo hace el constructor de Tablero.
+    pre: debe existir el objeto BatallaCampal
+    post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
+*/
+void BatallaCampal::cargarEscenarioUno(unsigned int xmax, unsigned int ymax, unsigned int zmax){
 
+    this->tablero = new Tablero(xmax, ymax, zmax);
+    // Validar con try - catch la memoria
+
+    for( unsigned int x = 1 ; x <= this->tablero->getxMaximo() ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->getyMaximo() ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->getzMaximo() ; z++){
+                if( x == 1 )
+                    this->tablero->getCasilla(x,y,z)->setTipo(Agua);
+                else{
+                    this->tablero->getCasilla(x,y,z)->setTipo(Aire);
+                }
+                this->tablero->getCasilla(x,y,z)->setEstado(Vacio);
+            }
+        }
+    }
+
+
+}
+
+/*
+    comentario: MAPA TERRITORIO, nivel 1 tierra resto aire. Este método llama al creador de tablero que genera los casilleros vacíos. Según el tipo de escenario se asignan los tipos de casillero.
+    No hace falta validar los maximos porque lo hace el constructor de Tablero.
+    pre: debe existir el objeto BatallaCampal
+    post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
+*/
+void BatallaCampal::cargarEscenarioDos(unsigned int xmax, unsigned int ymax, unsigned int zmax){
+
+    this->tablero = new Tablero(xmax, ymax, zmax);
+    // Validar con try - catch la memoria
+
+    for( unsigned int x = 1 ; x <= this->tablero->getxMaximo() ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->getyMaximo() ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->getzMaximo() ; z++){
+                if( x == 1 )
+                    this->tablero->getCasilla(x,y,z)->setTipo(Tierra);
+                else{
+                    this->tablero->getCasilla(x,y,z)->setTipo(Aire);
+                }
+                this->tablero->getCasilla(x,y,z)->setEstado(Vacio);
+            }
+        }
+    }
+}
+
+/*
+    comentario: MAPA COSTA, nivel 1 mezcla resto aire. Este método llama al creador de tablero que genera los casilleros vacíos. Según el tipo de escenario se asignan los tipos de casillero.
+    No hace falta validar los maximos porque lo hace el constructor de Tablero.
+    pre: debe existir el objeto BatallaCampal
+    post: crea el escenario uno con las dimensiones y tipos de casilla indicadas.
+*/
+void BatallaCampal::cargarEscenarioTres(unsigned int xmax, unsigned int ymax, unsigned int zmax){
+
+    this->tablero = new Tablero(xmax, ymax, zmax);
+    // Validar con try - catch la memoria
+
+    for( unsigned int x = 1 ; x <= this->tablero->getxMaximo() ; x++ ){
+        for( unsigned int y = 1 ; y <= this->tablero->getyMaximo() ; y++ ){
+            for ( unsigned int z = 1 ; z <= this->tablero->getzMaximo() ; z++){
+                    if ( x == 1 ){
+                        if( y < z ){
+                            this->tablero->getCasilla(x,y,z)->setTipo(Tierra);
+                        } else{
+                            this->tablero->getCasilla(x,y,z)->setTipo(Agua);
+                        }
+                    } else {
+                        this->tablero->getCasilla(x,y,z)->setTipo(Aire);
+                    }
+                    this->tablero->getCasilla(x,y,z)->setEstado(Vacio);
+                }
+            }
+    }
+
+}
 
 /*
     comentario: 
@@ -317,11 +397,11 @@ bool BatallaCampal::verificarCentroCubo(unsigned int &a, unsigned int &b, unsign
     std::cin >> b;
     std::cout << "Ingrese el valor del eje horizontal z: ";
     std::cin >> c;
-    if( a < 2 || a > (this->tablero->getxMaximo() - 1) )
+    if( a < 2 || a > (this->tablero->xMaximo - 1) )
         return false;
-    if( b < 2 || b > (this->tablero->getyMaximo() - 1) )
+    if( b < 2 || b > (this->tablero->yMaximo - 1) )
         return false;
-    if( c < 2 || c > (this->tablero->getzMaximo() - 1) )
+    if( c < 2 || c > (this->tablero->zMaximo - 1) )
         return false;
     return true;
 }*/
@@ -335,7 +415,7 @@ bool BatallaCampal::verificarCentroCubo(unsigned int &a, unsigned int &b, unsign
 void BatallaCampal::dispararMisil(Jugador* jugador){
     unsigned int xc, yc, zc;
     std::cout << "Elija las coordenadas que definen el centro del cubo a destruir" << std::endl;
-    while( this->tablero->leerCordenadas(xc, yc, zc,1,1,1) == false ){
+    while( this->tablero->leerCoordenadas(xc, yc, zc,1,1,1) == false ){
         std::cout << "Coordenadas erróneas, el cubo no entra en el tablero. Ingrese nuevamente." << std::endl;
     }
     for(unsigned int x = xc-1 ; x <= xc + 1 ; x ++){
@@ -386,7 +466,7 @@ void BatallaCampal::jugar(){
             }
         }      
     }
-    this->tablero->leerTableroTexto();
+    this->tablero->leerTableroTexto("Tablero.txt");
     if( this->jugadoresRestantes == 0 ){
         std::cout << "Ningún jugador ha ganado." << std::endl;
     } else {
