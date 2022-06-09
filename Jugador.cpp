@@ -1,6 +1,6 @@
 #include "Jugador.h"
 
-Jugador(int identificador){
+Jugador::Jugador(int identificador){
     if(identificador <= 0){
 	    throw "Error, id debe ser mayor o igual a 1";
 	}
@@ -15,7 +15,7 @@ Jugador::Jugador(int identificador, std::string nombre)
 	if(identificador <= 0){
 		throw "Error, id debe ser mayor o igual a 1";
 	}
-	if(nombre = ""){
+	if(nombre == ""){
 		throw "el nombre no puede estar vacio";
 	}
 
@@ -40,7 +40,7 @@ unsigned int Jugador::obtenerId()
 
 void Jugador::modificarNombre(std::string nuevoNombre)
 {
-	if(nuevoNombre = ""){
+	if(nuevoNombre == ""){
 		throw "El nombre no debe estar vacio";
 	}
 	this->nombre = nuevoNombre;
@@ -79,15 +79,17 @@ void Jugador::eliminar()
 {
 	this->identificador = 0;
 	this->nombre = "";
-	delete listaFichas;
-	delete listaCartas;	
+	this->cantidadFichas=0;
+	this->cantidadCartas=0;
 }
+
 unsigned int Jugador::getCantidadFichas(){
 	if (this->identificador<=0){
 		throw "No se encuentra inicializado";
 	}
    	return this->cantidadFichas;
 }
+
 void Jugador::setCantidadFichas(unsigned int soldados){
     this->cantidadFichas = soldados;
 }
