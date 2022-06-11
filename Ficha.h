@@ -21,6 +21,11 @@ class Ficha {
 		*/
 		Ficha(TipoFicha tipo, Jugador* jugador);
 		/*
+		* pre: jugador debe existir y ser distinto de NULL. Objeto ficha debe estar inicializado
+		* pos: asigna el jugador a la ficha
+		*/
+		void setJugador(Jugador* jugador);
+		/*
 		* pre:
 		* pos: Devuelve el tipo de ficha
 		*/
@@ -39,3 +44,4 @@ class Ficha {
 };
 
 #endif /* FICHA_H_ */
+
