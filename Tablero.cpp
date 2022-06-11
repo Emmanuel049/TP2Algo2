@@ -242,9 +242,6 @@ unsigned char* Tablero::leerBMP(char* rutaArchivo)
     return data;
 }
 
-
-
-
 void Tablero::impresionAclaraciones(){
 	std::cout << "Casilla inactiva se marca con: " << "X" << std::endl;
 	std::cout << "Casilla ocupada por Avion se marca con: " << "A" << std::endl;
@@ -263,9 +260,6 @@ void Tablero::escribirTableroTexto(unsigned int numJugador) {
 	std::ofstream tablero;
 	unsigned int h=0;
 	tablero.open(rutaArchivo.c_str());
-	if(tablero==NULL){
-		throw "No se pudo abrir el archivo";
-	}
 	this->casilleros->reiniciarCursor();
 	for (unsigned int b=0;b<this->yMaximo;b++){
 		str+="      ";
@@ -311,6 +305,7 @@ void Tablero::escribirTableroTexto(unsigned int numJugador) {
 		tablero << " —————————————————————————————————————————————————————————" << std::endl;
 		tablero << " —————————————————————————————————————————————————————————" << std::endl;
 	}
+	/* cierra el archivo, liberando el recurso */
 	tablero.close();
 }
 
@@ -319,9 +314,7 @@ void Tablero::leerTableroTexto(std::string rutaArchivo) {
 	impresionAclaraciones();
 	std::ifstream tablero;
 	tablero.open(rutaArchivo.c_str());
-	if(tablero==NULL){
-		throw "No se pudo abrir el archivo";
-	}
+	
 	
 	std::string fila;
 	std::getline(tablero, fila);
@@ -353,7 +346,7 @@ void Tablero::impresionFichaTexto(Ficha *ficha, unsigned int numJugador){
 void Tablero::impresionTipoTexto(Casilla * actual){
 	if( actual->getTipo() == Aire ){
 		std::cout<<"A"<<"  |  ";
-	} else if ( ctual->getTipo() == Agua ){
+	} else if ( actual->getTipo() == Agua ){
 		std::cout<<"W"<<"  |  ";
 	} else {
 		std::cout<<"T"<<"  |  ";
@@ -384,7 +377,7 @@ void Tablero::printTableroFichas(unsigned int numJugador){
 		
  		std::cout<<"-----------------------------------------"<<std::endl;	
 		for(unsigned int i = 1 ; i <= zMaximo ; i++){
-			std::cout << "  ";
+			std::cout << "  " ;
 			std::cout.width(4);
 			std::cout << i;
 		}
@@ -392,7 +385,8 @@ void Tablero::printTableroFichas(unsigned int numJugador){
 		this->casilleros->getCursor()->reiniciarCursor();
 		while(this->casilleros->getCursor()->avanzarCursor()){
 			y++;
-			std::cout << std::cout.width(2) << y << "|  " ;
+			std::cout.width(2);
+			std::cout << y << "|  " ;
 			this->casilleros->getCursor()->getCursor()->reiniciarCursor();
 			while(this->casilleros->getCursor()->getCursor()->avanzarCursor()){
 				Casilla * actual=this->casilleros->getCursor()->getCursor()->getCursor();
@@ -495,7 +489,3 @@ void Tablero::validarParametros(unsigned int x,unsigned int y,unsigned int z,uns
 			throw "z deben ser numeros enteros mayores que 0";
 		}
 }
-
-}
-
-
