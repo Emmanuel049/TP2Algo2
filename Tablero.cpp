@@ -408,9 +408,9 @@ void Tablero::printTableroFichas(unsigned int numJugador){
 	std::cout << "Barco: ";
 	std::cout.width(10);
 	std::cout << "B" << std::endl;
-	std::cout << std::endl;
 	this->casilleros->reiniciarCursor();
 	while(this->casilleros->avanzarCursor()){
+		std::cout << std::endl;
 		x++;
 		std::cout << "Altura x = " << x << std::endl;
 		
