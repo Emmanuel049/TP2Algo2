@@ -399,9 +399,15 @@ void Tablero::printTableroFichas(unsigned int numJugador){
 	unsigned int y=0;
 	unsigned int z=0;
 	std::cout<<"------------------Ejército Jugador" << numJugador << "--------------" <<std::endl;
-	std::cout << "Soldado: " << std::cout.width(8) << "S" << std::endl;
-	std::cout << "Avión: " << std::cout.width(10) << "A" << std::endl;
-	std::cout << "Barco: " << std::cout.width(10) << "B" << std::endl;
+	std::cout << "Soldado: ";
+	std::cout.width(8);
+	std::cout  << "S" << std::endl;
+	std::cout << "Avión: " ;
+	std::cout.width(10);
+	std::cout << "A" << std::endl;
+	std::cout << "Barco: ";
+	std::cout.width(10);
+	std::cout << "B" << std::endl;
 	std::cout << std::endl;
 	this->casilleros->reiniciarCursor();
 	while(this->casilleros->avanzarCursor()){
@@ -410,7 +416,9 @@ void Tablero::printTableroFichas(unsigned int numJugador){
 		
  		std::cout<<"-----------------------------------------"<<std::endl;	
 		for(unsigned int i = 1 ; i <= zMaximo ; i++){
-			std::cout << "  " << std::cout.width(4) << i;
+			std::cout << "  ";
+			std::cout.width(4);
+			std::cout << i;
 		}
 		std::cout << std::endl;
 		this->casilleros->getCursor()->reiniciarCursor();
@@ -447,25 +455,35 @@ void Tablero::printTableroTipos(){
 	unsigned int z=0;
 
 	std::cout<<"----------------------Mapa elegido-----------------------"<<std::endl;
-	std::cout << "Tierra: " << std::cout.width(8) << "T" << std::endl;
-	std::cout << "Aire: " << std::cout.width(10) << "A" << std::endl;
-	std::cout << "Agua: " << std::cout.width(10) << "W" << std::endl;
+	std::cout << "Tierra: ";
+	std::cout.width(8);
+	std::cout << "T" << std::endl;
+	std::cout << "Aire: ";
+	std::cout.width(10);
+	std::cout << "A" << std::endl;
+	std::cout << "Agua: ";
+	std::cout.width(10);
+	std::cout << "W" << std::endl;
 	std::cout << std::endl;
 	
 	this->casilleros->reiniciarCursor();
 	while(this->casilleros->avanzarCursor()){
 		x++;
-		std::cout << std::cout.width(20) << "Altura x = " << x << std::endl;
+		std::cout.width(20);
+		std::cout << "Altura x = " << x << std::endl;
  		std::cout<<"---------------------------------------------------"<<std::endl;
 	
 		for(unsigned int i = 1 ; i <= zMaximo ; i++){
-			std::cout << "  " << std::cout.width(4) << i;
+			std::cout << "  " ;
+			std::cout.width(4);
+			std::cout << i;
 		}
 		std::cout << std::endl;
 		this->casilleros->getCursor()->reiniciarCursor();
 		while(this->casilleros->getCursor()->avanzarCursor()){
 			y++;
-			std::cout << std::cout.width(2) << y << "|  " ;
+			std::cout.width(2);
+			std::cout << y << "|  " ;
 			this->casilleros->getCursor()->getCursor()->reiniciarCursor();
 			while(this->casilleros->getCursor()->getCursor()->avanzarCursor()){
 				Casilla * actual=this->casilleros->getCursor()->getCursor()->getCursor();
