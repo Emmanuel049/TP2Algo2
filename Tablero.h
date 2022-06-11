@@ -1,4 +1,3 @@
-
 #ifndef TABLERO_H_
 #define TABLERO_H_
 #include "Lista.h"
@@ -87,8 +86,7 @@ public:
 	 *archivo de texto del tablero.
 	 */
 	void leerTableroTexto(std::string rutaArchivo);
-	
-	
+
 	/*
 	 *Pre:-
 	 *Pos: Devuelve verdadero o falso segun la existencia de la casilla
