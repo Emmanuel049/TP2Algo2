@@ -1,7 +1,7 @@
 all: tp2
 
-tp2: main.o batallacampal.o tablero.o casilla.o ficha.o jugador.o
-	g++ -Wall -g main.o BatallaCampal.o Tablero.o Casilla.o Ficha.o Jugador.o -o tp2 -lm
+tp2: main.o batallacampal.o tablero.o casilla.o ficha.o jugador.o EasyBMP.o
+	g++ -Wall -g main.o BatallaCampal.o Tablero.o Casilla.o Ficha.o Jugador.o EasyBMP.o -o tp2 -lm
 
 main.o: main.cpp BatallaCampal.h Lista.h
 	g++ -Wall -c -g main.cpp
@@ -20,3 +20,6 @@ ficha.o: Ficha.cpp Ficha.h Jugador.h
 
 jugador.o: Jugador.cpp Jugador.h
 	g++ -Wall -c -g Jugador.cpp
+
+EasyBMP.o: EasyBMP.cpp EasyBMP.h
+	g++ -Wall -c -g EasyBMP.cpp
