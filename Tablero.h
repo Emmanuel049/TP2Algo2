@@ -87,14 +87,6 @@ public:
 	 *archivo de texto del tablero.
 	 */
 	void leerTableroTexto(std::string rutaArchivo);
-
-	/*
-	 *Pre: El tda Tablero debe estar inicializado para conocer las dimensiones de este
-	 *Pos: Muestra por pantalla el estado del tablero (completo con posicion de 
-	 * fichas, inactividad de casillas y distintos terrenos) actual.
-	 *
-	 */
-	void impresionTableroTextoMixto(unsigned int numJugador);
 	
 	
 	/*
