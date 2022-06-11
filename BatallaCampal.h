@@ -7,17 +7,20 @@
 
 #include <iostream>
 
-const unsigned int msoldados = 1; // es fijo, depende del juego 100%
+const unsigned int msoldados = 4; // es fijo, depende del juego 100%
 const unsigned int xmax = 3; // es fijo, depende del juego 100%
 const unsigned int ymax = 10; // es fijo, depende del juego 100%
 const unsigned int zmax = 10; // es fijo, depende del juego 100%
-const unsigned int qCartas = 3; // es fijo, depende del juego 100%
+const unsigned int qCartas = 6; // es fijo, depende del juego 100%
 const unsigned int qEscenarios = 3; // es fijo, depende del juego 100%
 
 enum TipoCarta{
     CartaMisil,
     CartaAvion,
     CartaBarco,
+    CartaSaltearTurno,
+    CartaRobarArmamento,
+    CartaNuevoDisparo,
     Ninguna
 };
 
@@ -122,12 +125,14 @@ class BatallaCampal{
             post: realiza el beneficio del avión en el aire.
         */
         void beneficioAvion(Jugador* jugador);
+        
         /*
-            comentario: chequea si el cubo elegido por el jugador entra o no en el tablero.
-            pre: ninguna, la validación de las coordenadas en el tablero se hace fuera de este método, en dispararMisil.
-            post: devuelve true si el centro del cubo seleccionado por el jugador es factible para el tablero actual.
+            comentario: ejecuta el beneficio de robar armamento.
+            pre: debe existir jugador y ser distinto de NULL
+            post: cambia de propietario la ficha seleccionada por el jugador actual.
         */
-        //bool verificarCentroCubo(unsigned int &a, unsigned int &b, unsigned int &c);
+        void robarArmamento(Jugador* jugador);
+
         /*
             comentario: 
             pre: jugador debe existir y ser distinto de NULL.
