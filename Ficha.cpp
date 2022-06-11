@@ -21,3 +21,6 @@ Ficha::~Ficha(){
 	this->jugador = NULL;
 }
 
+void Ficha::setJugador(Jugador* jugador){
+	this->jugador = jugador;
+}
