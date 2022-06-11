@@ -373,12 +373,13 @@ void Tablero::leerTableroTexto(std::string rutaArchivo) {
 
 void Tablero::impresionFichaTexto(Ficha *ficha, unsigned int numJugador){
 	if(ficha->getTipo()==Avion){
-		std::cout << "| " << "A"<<numJugador << " ";
+		std::cout << "A"<<numJugador;
 	}else if(ficha->getTipo()==Soldado){
-		std::cout << "| " << "S"<<numJugador << " ";}
-	else{
-		std::cout << "| " << "B"<<numJugador << " ";
+		std::cout <<"S"<<numJugador;
+	}else{
+		std::cout << "B"<<numJugador;
 	}
+	std::cout<<" |  ";
 }
 
 
