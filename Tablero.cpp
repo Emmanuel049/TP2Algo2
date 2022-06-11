@@ -244,39 +244,6 @@ unsigned char* Tablero::leerBMP(char* rutaArchivo)
 
 
 
-void Tablero::impresionTableroTextoMixto(unsigned int numJugador) 
-{
-	validarParametros(this->xMaximo,this->yMaximo,this->zMaximo);
-	impresionAclaraciones();
-	this->casilleros->reiniciarCursor();
-	while((this->casilleros->avanzarCursor())){
-		std::cout << " —————————————————————————————————————————————————————————" << std::endl;
-		this->casilleros->getCursor()->reiniciarCursor();
-		while((this->casilleros->getCursor()->avanzarCursor())){
-			this->casilleros->getCursor()->getCursor()->reiniciarCursor();
-			std::cout << "  —————————————————————————————————————————————————————————" << std::endl;
-			std::cout.width(2);
-			while((this->casilleros->getCursor()->getCursor()->avanzarCursor())){
-				Casilla * actual=this->casilleros->getCursor()->getCursor()->getCursor();
-				if(actual->getEstado()==Inactivo){
-					std::cout << "| " << "X" << " ";
-				}else if(actual->getEstado()==Ocupado){
-					if(actual->getFicha()->getJugador()->obtenerId()==numJugador){
-						impresionFichaTexto(actual->getFicha(), numJugador);
-					}
-				}else{
-					impresionTipoTexto(actual);
-				}
-			}
-			std::cout << "|" << std::endl;
-		}
-		std::cout << " —————————————————————————————————————————————————————————" << std::endl;
-		std::cout << " —————————————————————————————————————————————————————————" << std::endl;
-	}
-	std::cout << " —————————————————————————————————————————————————————————" << std::endl;
-}
-
-
 
 void Tablero::impresionAclaraciones(){
 	std::cout << "Casilla inactiva se marca con: " << "X" << std::endl;
@@ -384,12 +351,12 @@ void Tablero::impresionFichaTexto(Ficha *ficha, unsigned int numJugador){
 
 
 void Tablero::impresionTipoTexto(Casilla * actual){
-	if(actual->getTipo()==Agua){
-		std::cout << "| " << " ~" << " ";
-	}else if(actual->getTipo()==Tierra){
-		std::cout << "| " << " -" << " ";
-	}else{
-		std::cout << "| " << "'  '" << " ";
+	if( actual->getTipo() == Aire ){
+		std::cout<<"A"<<"  |  ";
+	} else if ( ctual->getTipo() == Agua ){
+		std::cout<<"W"<<"  |  ";
+	} else {
+		std::cout<<"T"<<"  |  ";
 	}
 }
 
@@ -491,15 +458,7 @@ void Tablero::printTableroTipos(){
 			while(this->casilleros->getCursor()->getCursor()->avanzarCursor()){
 				Casilla * actual=this->casilleros->getCursor()->getCursor()->getCursor();
 				z++;
-				if( actual->getTipo() == Aire ){
-					std::cout<<"A"<<"  |  ";
-				} else {
-					if ( actual->getTipo() == Agua ){
-						std::cout<<"W"<<"  |  ";
-					} else {
-						std::cout<<"T"<<"  |  ";
-					}
-				}
+				impresionTipoTexto(actual);
 			}
 			z=0;
 			std::cout << std::endl;
