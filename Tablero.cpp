@@ -340,10 +340,10 @@ void Tablero::escribirTableroTexto(unsigned int numJugador) {
 			tablero << "|" << std::endl;
 			tablero << "     —————————————————————————————————————————" << std::endl;
 		}
+		h=0;
 		tablero << " —————————————————————————————————————————————————————————" << std::endl;
 		tablero << " —————————————————————————————————————————————————————————" << std::endl;
 	}
-	/* cierra el archivo, liberando el recurso */
 	tablero.close();
 }
 
@@ -443,8 +443,10 @@ void Tablero::printTableroFichas(unsigned int numJugador){
 					}
 				}
 			}
+			z=0;
 			std::cout << std::endl;
 		}
+		y=0;
 	}
 	std::cout<<"-----------------------------------------"<<std::endl<< std::endl;
 }
@@ -498,8 +500,10 @@ void Tablero::printTableroTipos(){
 					}
 				}
 			}
+			z=0;
 			std::cout << std::endl;
 		}
+		y=0;
 	}
 	std::cout<<"---------------------------------------------------"<<std::endl<< std::endl;
 }
