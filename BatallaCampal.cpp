@@ -2,7 +2,6 @@
 #include <iostream>
 #include <cstdlib>
 
-
 /*  
     comentario: el constructor es vacío, pues quienes piden la memoria para son los escenarios 123.
     pre: nada
@@ -257,7 +256,6 @@ void BatallaCampal::ejecutarDisparo(Jugador* jugador){
                 this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->eliminarFicha();
                 if ( this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->getCantidadFichas() == 0 ){
                     std::cout << "El jugador "<< this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->obtenerId() << " ha perdido todos sus soldados y fue eliminado del juego." << std::endl;
-                    this->tablero->getCasilla(x, y, z)->getFicha()->getJugador()->eliminar();
                     this->jugadoresRestantes--;
                 }
             } else {
@@ -383,29 +381,43 @@ void BatallaCampal::beneficioAvion(Jugador* jugador){
     ejecutarDisparo(jugador);
 }
 
+
 /*
-    comentario: chequea si el cubo elegido por el jugador entra o no en el tablero.
-    pre: ninguna, la validación de las coordenadas en el tablero se hace fuera de este método, en dispararMisil.
-    post: devuelve true si el centro del cubo seleccionado por el jugador es factible para el tablero actual.
+    comentario: ejecuta el beneficio de robar armamento.
+    pre: debe existir jugador y ser distinto de NULL
+    post: cambia de propietario la ficha seleccionada por el jugador actual.
 */
 
-/* Ya hay una igual en Tablero.
-bool BatallaCampal::verificarCentroCubo(unsigned int &a, unsigned int &b, unsigned int &c){
-    std::cout << "Ingrese el valor del eje vertical x (altura): ";
-    std::cin >> a;
-    std::cout << "Ingrese el valor del eje profundidad y: ";
-    std::cin >> b;
-    std::cout << "Ingrese el valor del eje horizontal z: ";
-    std::cin >> c;
-    if( a < 2 || a > (this->tablero->xMaximo - 1) )
-        return false;
-    if( b < 2 || b > (this->tablero->yMaximo - 1) )
-        return false;
-    if( c < 2 || c > (this->tablero->zMaximo - 1) )
-        return false;
-    return true;
-}*/
+void BatallaCampal::robarArmamento(Jugador* jugador){
+    std::cout << "Seleccione la posible posición del armamento a robar." << std::endl;
 
+    char cant = 0;
+    unsigned int x, y, z;
+
+    while ( cant < 2 ){
+        this->tablero->leerCoordenadas(x, y, z);
+        if( this->tablero->getCasilla(x, y, z)->getEstado() == Inactivo || this->tablero->getCasilla(x, y, z)->getEstado() == Vacio){
+            std::cout << "Esa casilla está vacía o inactiva. Tiene otra oportunidad, ingrese nuevas coordenadas" << std::endl;
+            cant++;
+        } else {
+            if ( this->tablero->getCasilla(x, y, z)->getFicha()->getJugador() == jugador ){
+                std::cout << "Esa casilla posee una ficha de su propiedad. Tiene otra oportunidad, ingrese nuevas coordenadas" << std::endl;
+                cant++;           
+            } else {
+                if ( this->tablero->getCasilla(x, y, z)->getFicha()->getTipo() == Soldado ){
+                    std::cout << "Esa casilla posee un soldado y no un armamento. Tiene otra oportunidad, ingrese nuevas coordenadas" << std::endl;
+                    cant++;
+                } else {
+                    std::cout << "Usted ha elegido una casilla con un armamento enemigo, ahora le pertenece."  << std::endl;
+                    this->tablero->getCasilla(x, y, z)->getFicha()->setJugador(jugador);
+                    cant = 2;
+                }
+            }
+        }     
+    }
+
+}
+    
 
 /*
     comentario: 
@@ -438,8 +450,6 @@ void BatallaCampal::dispararMisil(Jugador* jugador){
     }
 }
 
-
-
 /*
     comentario: random para dar la carta al jugador al inicio de su turno.
     pre: el objeto BatallaCampal debe estar creado
@@ -455,15 +465,16 @@ TipoCarta BatallaCampal::tomarCarta(){
     pre: debe existir BatallaCampal y ya estar inicializado.
     post: realiza los turnos de todo el juego hasta que uno de todos los jugadores gane.
 */
+
 void BatallaCampal::jugar(){
-    
     while( this->jugadoresRestantes > 1 ){
-        for( unsigned int i = 1 ; i <= this->nJugadores ; i++){
-            if( this->jugadores->obtener(i)->getCantidadFichas() != 0 ){
-                std::cout << "JUGADOR " << i << ": es su turno. Mucha suerte." << std::endl;
-                this->turnoDeJugador = i;
-                this->desarrollarTurno(this->jugadores->obtener(i));
+        this->turnoDeJugador = 1;
+        while ( this->turnoDeJugador <= this->nJugadores ){
+            if( this->jugadores->obtener(this->turnoDeJugador)->getCantidadFichas() != 0 ){
+                std::cout << "JUGADOR " << this->turnoDeJugador << ": es su turno. Mucha suerte." << std::endl;
+                this->desarrollarTurno(this->jugadores->obtener(this->turnoDeJugador));
             }
+            this->turnoDeJugador++;
         }      
     }
     this->tablero->leerTableroTexto("Tablero.txt");
@@ -527,17 +538,32 @@ void BatallaCampal::desarrollarTurno(Jugador* jugador){
     carta = this->tomarCarta();
     if( carta == CartaMisil ){
         std::cout << "JUGADOR " << idTurnoActual << ": La carta recibida es un misil." << std::endl;
-        dispararMisil(jugador);
+        this->dispararMisil(jugador);
     } else {
         if( carta == CartaAvion ){
             std::cout << "JUGADOR " << idTurnoActual << ": La carta recibida es de Avión." << std::endl;
-            colocarArmamentoCarta(jugador, carta); 
+            this->colocarArmamentoCarta(jugador, carta); 
             std::cout << "JUGADOR " << idTurnoActual << ": En el próximo turno podrá hacer uso de este armamento." << std::endl;
-        } else {
-            std::cout << "JUGADOR " << idTurnoActual << ": La carta recibida es de Barco." << std::endl;
-            colocarArmamentoCarta(jugador, carta); 
-            std::cout << "JUGADOR " << idTurnoActual << ": En el próximo turno podrá hacer uso de este armamento." << std::endl;
-        }
+        } else 
+            if( carta == CartaSaltearTurno ){
+                std::cout << "JUGADOR " << idTurnoActual << ": La carta recibida salteará el turno del próximo jugador." << std::endl;
+                this->turnoDeJugador++;
+            } else {
+                if ( carta == CartaRobarArmamento ){
+                    std::cout << "JUGADOR " << idTurnoActual << ": La carta recibida le permite robar un armamento, tiene dos oportunidades" << std::endl;
+                    this->robarArmamento(jugador);
+                } else {
+                    if ( carta == CartaNuevoDisparo ){
+                        std::cout << "JUGADOR " << idTurnoActual << ": La carta recibida le permite realizar un nuevo disparo." << std::endl;
+                        this->ejecutarDisparo(jugador);       
+                    }else {
+                        std::cout << "JUGADOR " << idTurnoActual << ": La carta recibida es de Barco." << std::endl;
+                        this->colocarArmamentoCarta(jugador, carta); 
+                        std::cout << "JUGADOR " << idTurnoActual << ": En el próximo turno podrá hacer uso de este armamento." << std::endl;
+                    }
+                
+                }
+            }
     }
     std::cout << "JUGADOR " << jugador->obtenerId() << ": Este es su ejército actual: " << std::endl;
     this->tablero->printTableroFichas(jugador->obtenerId());
@@ -545,4 +571,3 @@ void BatallaCampal::desarrollarTurno(Jugador* jugador){
     this->tablero->BMPdeTablero(jugador->obtenerId());
     
 }
-
