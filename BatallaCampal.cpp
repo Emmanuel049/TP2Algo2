@@ -568,6 +568,5 @@ void BatallaCampal::desarrollarTurno(Jugador* jugador){
     std::cout << "JUGADOR " << jugador->obtenerId() << ": Este es su ejército actual: " << std::endl;
     this->tablero->printTableroFichas(jugador->obtenerId());
     this->tablero->escribirTableroTexto(jugador->obtenerId());
-    this->tablero->BMPdeTablero(jugador->obtenerId());
     
 }
